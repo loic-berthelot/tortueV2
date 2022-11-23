@@ -45,6 +45,7 @@
 
 %%
 
+// on devrait mettre toutes les instructions dans un arbre et les exécuter seulement lorsque l'utilisateur met fin
 programme:
     NUMBER NL {
         std::cout << "nombre : " << $1 << std::endl;
@@ -52,20 +53,20 @@ programme:
         std::cout <<driver.getVariable("a") << std::endl;
     } programme
     | AVANCE IdTortue NL{
-        driver.avancerTortue($3, 1);
-    }
+        driver.avancerTortue($2, 1);
+    }  programme
     | AVANCE NUMBER IdTortue{
         driver.avancerTortue($3, $2);
     } programme
     | RECULE NUMBER IdTortue{
         driver.avancerTortue($3, - $2);
-    }
+    } programme
     | SAUTER NUMBER IdTortue{
         driver.sauter($3);
-    }
+    } programme
     | TOURNER SENS IdTortue{
         driver.tourner($3, $2);
-    }
+    } programme
     | END NL {
         YYACCEPT;
     }
