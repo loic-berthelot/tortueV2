@@ -669,7 +669,7 @@ namespace yy {
           switch (yyn)
             {
   case 2: // $@1: %empty
-#line 49 "../parser/parser.yy"
+#line 50 "../parser/parser.yy"
               {
         std::cout << "nombre : " << yystack_[1].value.as < int > () << std::endl;
         driver.setVariable("a",yystack_[1].value.as < int > ());
@@ -678,16 +678,16 @@ namespace yy {
 #line 679 "parser.cc"
     break;
 
-  case 4: // programme: AVANCE NL IdTortue
-#line 54 "../parser/parser.yy"
+  case 4: // programme: AVANCE IdTortue NL
+#line 55 "../parser/parser.yy"
                         {
-        driver.avancerTortue(yystack_[0].value.as < int > (), 1);
+        driver.avancerTortue(yystack_[1].value.as < int > (), 1);
     }
 #line 687 "parser.cc"
     break;
 
   case 5: // $@2: %empty
-#line 57 "../parser/parser.yy"
+#line 58 "../parser/parser.yy"
                             {
         driver.avancerTortue(yystack_[0].value.as < int > (), yystack_[1].value.as < int > ());
     }
@@ -695,7 +695,7 @@ namespace yy {
     break;
 
   case 7: // programme: RECULE NUMBER IdTortue
-#line 60 "../parser/parser.yy"
+#line 61 "../parser/parser.yy"
                             {
         driver.avancerTortue(yystack_[0].value.as < int > (), - yystack_[1].value.as < int > ());
     }
@@ -703,7 +703,7 @@ namespace yy {
     break;
 
   case 8: // programme: SAUTER NUMBER IdTortue
-#line 63 "../parser/parser.yy"
+#line 64 "../parser/parser.yy"
                             {
         driver.sauter(yystack_[0].value.as < int > ());
     }
@@ -711,7 +711,7 @@ namespace yy {
     break;
 
   case 9: // programme: TOURNER SENS IdTortue
-#line 66 "../parser/parser.yy"
+#line 67 "../parser/parser.yy"
                            {
         driver.tourner(yystack_[0].value.as < int > (), yystack_[1].value.as < int > ());
     }
@@ -719,7 +719,7 @@ namespace yy {
     break;
 
   case 10: // programme: END NL
-#line 69 "../parser/parser.yy"
+#line 70 "../parser/parser.yy"
              {
         YYACCEPT;
     }
@@ -923,16 +923,16 @@ namespace yy {
   const signed char
    Parser ::yypact_[] =
   {
-      -3,     6,     8,     5,     7,     9,     3,    15,   -17,   -17,
-      10,    11,    12,    13,    14,   -17,    -3,   -17,   -17,   -17,
-     -17,   -17,   -17,    -3,   -17
+       5,    -2,     0,    -3,    -1,     1,    -5,    15,   -17,   -17,
+       6,    13,     7,     8,     9,   -17,     5,   -17,   -17,   -17,
+     -17,   -17,   -17,     5,   -17
   };
 
   const signed char
    Parser ::yydefact_[] =
   {
        0,     0,     0,     0,     0,     0,     0,     0,    10,     2,
-       0,     0,     0,     0,     0,     1,     0,     4,     5,     7,
+       0,     0,     0,     0,     0,     1,     0,     5,     4,     7,
        8,     9,     3,     0,     6
   };
 
@@ -951,24 +951,24 @@ namespace yy {
   const signed char
    Parser ::yytable_[] =
   {
-      22,     1,     2,     3,     4,     5,     6,    24,    10,     8,
-      11,     9,    12,    14,    13,    15,     0,     0,     0,     0,
-       0,    17,    18,    19,    20,    21
+      22,     8,    10,     9,    12,    14,    13,    24,    11,     1,
+       2,     3,     4,     5,     6,    15,    18,    17,    19,    20,
+      21
   };
 
   const signed char
    Parser ::yycheck_[] =
   {
-      16,     4,     5,     6,     7,     8,     9,    23,     3,     3,
-       5,     3,     5,    10,     5,     0,    -1,    -1,    -1,    -1,
-      -1,    11,    11,    11,    11,    11
+      16,     3,     5,     3,     5,    10,     5,    23,    11,     4,
+       5,     6,     7,     8,     9,     0,     3,    11,    11,    11,
+      11
   };
 
   const signed char
    Parser ::yystos_[] =
   {
        0,     4,     5,     6,     7,     8,     9,    13,     3,     3,
-       3,     5,     5,     5,    10,     0,    14,    11,    11,    11,
+       5,    11,     5,     5,    10,     0,    14,    11,     3,    11,
       11,    11,    13,    15,    13
   };
 
@@ -1004,8 +1004,8 @@ namespace yy {
   const signed char
    Parser ::yyrline_[] =
   {
-       0,    49,    49,    49,    54,    57,    57,    60,    63,    66,
-      69
+       0,    50,    50,    50,    55,    58,    58,    61,    64,    67,
+      70
   };
 
   void
@@ -1086,7 +1086,7 @@ namespace yy {
 } // yy
 #line 1088 "parser.cc"
 
-#line 73 "../parser/parser.yy"
+#line 74 "../parser/parser.yy"
 
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {
