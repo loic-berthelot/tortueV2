@@ -31,14 +31,22 @@ void Driver::changerPositionTortue(int n,int x, int y) {
     getJardin()->changePosition(n,x,y);
 }
 
-void Driver::avancerTortue(int n, int x){
+void Driver::avancerTortue(int n, int steps){
     int a = getJardin()->position(n).x();
     int b = getJardin()->position(n).y();
     
     int o = getJardin()->orientation(n)/90; //la tortue commence par regarder en haut
-    std::cout << "oh oh o " << o <<" \na :";
-    std::cout<<((o+1)%2)*((o-1)*-1);
-    getJardin()->changePosition(n,a+x * ((o+1)%2)*((o-2)*-1)  ,b +x* ((o+1)%2)*((o-1)*-1) );
+
+    int x, y;
+    switch (o)
+    {
+        case(0) : x =0; y = -1; break;
+        case(1) : x =1; y = 0; break;
+        case(2) : x =0; y = 1; break;
+        case(3) : x =-1; y = 0; break;
+    }
+    getJardin()->changePosition(n,a+steps*x, b+steps*y);
+    std::cout << "ok";
 }
 
 void Driver::sauter(int n){

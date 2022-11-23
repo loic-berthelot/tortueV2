@@ -501,7 +501,11 @@ namespace yy {
         S_YYACCEPT = 12,                         // $accept
         S_programme = 13,                        // programme
         S_14_1 = 14,                             // $@1
-        S_15_2 = 15                              // $@2
+        S_15_2 = 15,                             // $@2
+        S_16_3 = 16,                             // $@3
+        S_17_4 = 17,                             // $@4
+        S_18_5 = 18,                             // $@5
+        S_19_6 = 19                              // $@6
       };
     };
 
@@ -1256,8 +1260,8 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 20,     ///< Last index in yytable_.
-      yynnts_ = 4,  ///< Number of nonterminal symbols.
+      yylast_ = 24,     ///< Last index in yytable_.
+      yynnts_ = 8,  ///< Number of nonterminal symbols.
       yyfinal_ = 15 ///< Termination state number.
     };
 
@@ -1270,7 +1274,7 @@ switch (yykind)
 
 
 } // yy
-#line 1274 "parser.hh"
+#line 1278 "parser.hh"
 
 
 
