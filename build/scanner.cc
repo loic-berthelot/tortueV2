@@ -700,22 +700,24 @@ case 8:
 YY_RULE_SETUP
 #line 56 "../parser/scanner.ll"
 {
+    
     yylval->build<int>(std::atoi(yytext));
     return token::NUMBER;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 61 "../parser/scanner.ll"
+#line 62 "../parser/scanner.ll"
 {
-    yylval->build<int>(std::atoi(yytext));
+    std::string temp = YYText();
+    yylval->build<int>(std::stoi(temp.substr(1)));
     return token::IdTortue;
 }
 	YY_BREAK
 case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
-#line 66 "../parser/scanner.ll"
+#line 68 "../parser/scanner.ll"
 {
     loc->lines();
     return token::NL;
@@ -723,10 +725,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 71 "../parser/scanner.ll"
+#line 73 "../parser/scanner.ll"
 ECHO;
 	YY_BREAK
-#line 730 "scanner.cc"
+#line 732 "scanner.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1689,6 +1691,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 71 "../parser/scanner.ll"
+#line 73 "../parser/scanner.ll"
 
 

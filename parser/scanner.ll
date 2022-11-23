@@ -53,12 +53,14 @@ fin return token::END;
     return token::SENS;
 }
 [0-9]+      {
+    
     yylval->build<int>(std::atoi(yytext));
     return token::NUMBER;
 }
 
 @[0-9]+   {
-    yylval->build<int>(std::atoi(yytext));
+    std::string temp = YYText();
+    yylval->build<int>(std::stoi(temp.substr(1)));
     return token::IdTortue;
 }
 

@@ -51,7 +51,7 @@ programme:
         driver.setVariable("a",$1);
         std::cout <<driver.getVariable("a") << std::endl;
     } programme
-    | AVANCE NL IdTortue{
+    | AVANCE IdTortue NL{
         driver.avancerTortue($3, 1);
     }
     | AVANCE NUMBER IdTortue{
