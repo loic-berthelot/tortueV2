@@ -77,5 +77,5 @@ void yy::Parser::error( const location_type &l, const std::string & err_msg) {
 }
 
 void test(){
-    std::cout<<"test";
+    std::cout<<"test2";
 }
