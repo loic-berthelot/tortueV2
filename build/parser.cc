@@ -180,6 +180,7 @@ namespace yy {
     {
       case symbol_kind::S_NUMBER: // NUMBER
       case symbol_kind::S_SENS: // SENS
+      case symbol_kind::S_IdTortue: // IdTortue
         value.copy< int > (YY_MOVE (that.value));
         break;
 
@@ -214,6 +215,7 @@ namespace yy {
     {
       case symbol_kind::S_NUMBER: // NUMBER
       case symbol_kind::S_SENS: // SENS
+      case symbol_kind::S_IdTortue: // IdTortue
         value.move< int > (YY_MOVE (s.value));
         break;
 
@@ -316,6 +318,7 @@ namespace yy {
     {
       case symbol_kind::S_NUMBER: // NUMBER
       case symbol_kind::S_SENS: // SENS
+      case symbol_kind::S_IdTortue: // IdTortue
         value.YY_MOVE_OR_COPY< int > (YY_MOVE (that.value));
         break;
 
@@ -336,6 +339,7 @@ namespace yy {
     {
       case symbol_kind::S_NUMBER: // NUMBER
       case symbol_kind::S_SENS: // SENS
+      case symbol_kind::S_IdTortue: // IdTortue
         value.move< int > (YY_MOVE (that.value));
         break;
 
@@ -356,6 +360,7 @@ namespace yy {
     {
       case symbol_kind::S_NUMBER: // NUMBER
       case symbol_kind::S_SENS: // SENS
+      case symbol_kind::S_IdTortue: // IdTortue
         value.copy< int > (that.value);
         break;
 
@@ -375,6 +380,7 @@ namespace yy {
     {
       case symbol_kind::S_NUMBER: // NUMBER
       case symbol_kind::S_SENS: // SENS
+      case symbol_kind::S_IdTortue: // IdTortue
         value.move< int > (that.value);
         break;
 
@@ -638,6 +644,7 @@ namespace yy {
     {
       case symbol_kind::S_NUMBER: // NUMBER
       case symbol_kind::S_SENS: // SENS
+      case symbol_kind::S_IdTortue: // IdTortue
         yylhs.value.emplace< int > ();
         break;
 
@@ -668,47 +675,47 @@ namespace yy {
         driver.setVariable("a",yystack_[1].value.as < int > ());
         std::cout <<driver.getVariable("a") << std::endl;
     }
-#line 672 "parser.cc"
+#line 679 "parser.cc"
     break;
 
-  case 4: // programme: AVANCE NL
+  case 4: // programme: AVANCE NL IdTortue
 #line 54 "../parser/parser.yy"
-                {
-        driver.avancerTortue(0, 1);
+                        {
+        driver.avancerTortue(yystack_[0].value.as < int > (), 1);
     }
-#line 680 "parser.cc"
+#line 687 "parser.cc"
     break;
 
   case 5: // $@2: %empty
 #line 57 "../parser/parser.yy"
-                    {
-        driver.avancerTortue(0, yystack_[0].value.as < int > ());
+                            {
+        driver.avancerTortue(yystack_[0].value.as < int > (), yystack_[1].value.as < int > ());
     }
-#line 688 "parser.cc"
+#line 695 "parser.cc"
     break;
 
-  case 7: // programme: RECULE NUMBER
+  case 7: // programme: RECULE NUMBER IdTortue
 #line 60 "../parser/parser.yy"
-                    {
-        driver.avancerTortue(0, - yystack_[0].value.as < int > ());
+                            {
+        driver.avancerTortue(yystack_[0].value.as < int > (), - yystack_[1].value.as < int > ());
     }
-#line 696 "parser.cc"
+#line 703 "parser.cc"
     break;
 
-  case 8: // programme: SAUTER NUMBER
+  case 8: // programme: SAUTER NUMBER IdTortue
 #line 63 "../parser/parser.yy"
-                    {
-        driver.sauter(0);
+                            {
+        driver.sauter(yystack_[0].value.as < int > ());
     }
-#line 704 "parser.cc"
+#line 711 "parser.cc"
     break;
 
-  case 9: // programme: TOURNER SENS
+  case 9: // programme: TOURNER SENS IdTortue
 #line 66 "../parser/parser.yy"
-                   {
-        driver.tourner(0, yystack_[0].value.as < int > ());
+                           {
+        driver.tourner(yystack_[0].value.as < int > (), yystack_[1].value.as < int > ());
     }
-#line 712 "parser.cc"
+#line 719 "parser.cc"
     break;
 
   case 10: // programme: END NL
@@ -716,11 +723,11 @@ namespace yy {
              {
         YYACCEPT;
     }
-#line 720 "parser.cc"
+#line 727 "parser.cc"
     break;
 
 
-#line 724 "parser.cc"
+#line 731 "parser.cc"
 
             default:
               break;
@@ -909,68 +916,73 @@ namespace yy {
 
 
 
-  const signed char  Parser ::yypact_ninf_ = -8;
+  const signed char  Parser ::yypact_ninf_ = -17;
 
   const signed char  Parser ::yytable_ninf_ = -1;
 
   const signed char
    Parser ::yypact_[] =
   {
-      -4,     4,     8,     3,     7,     9,     5,    13,    -8,    -8,
-      -8,    -8,    -8,    -8,    -8,    -8,    -4,    -4,    -8,    -8
+      -3,     6,     8,     5,     7,     9,     3,    15,   -17,   -17,
+      10,    11,    12,    13,    14,   -17,    -3,   -17,   -17,   -17,
+     -17,   -17,   -17,    -3,   -17
   };
 
   const signed char
    Parser ::yydefact_[] =
   {
        0,     0,     0,     0,     0,     0,     0,     0,    10,     2,
-       4,     5,     7,     8,     9,     1,     0,     0,     3,     6
+       0,     0,     0,     0,     0,     1,     0,     4,     5,     7,
+       8,     9,     3,     0,     6
   };
 
   const signed char
    Parser ::yypgoto_[] =
   {
-      -8,    -7,    -8,    -8
+     -17,   -16,   -17,   -17
   };
 
   const signed char
    Parser ::yydefgoto_[] =
   {
-       0,     7,    16,    17
+       0,     7,    16,    23
   };
 
   const signed char
    Parser ::yytable_[] =
   {
-       1,     2,     3,     4,     5,     6,    10,     8,    11,    18,
-      19,     9,    12,    15,    13,    14
+      22,     1,     2,     3,     4,     5,     6,    24,    10,     8,
+      11,     9,    12,    14,    13,    15,     0,     0,     0,     0,
+       0,    17,    18,    19,    20,    21
   };
 
   const signed char
    Parser ::yycheck_[] =
   {
-       4,     5,     6,     7,     8,     9,     3,     3,     5,    16,
-      17,     3,     5,     0,     5,    10
+      16,     4,     5,     6,     7,     8,     9,    23,     3,     3,
+       5,     3,     5,    10,     5,     0,    -1,    -1,    -1,    -1,
+      -1,    11,    11,    11,    11,    11
   };
 
   const signed char
    Parser ::yystos_[] =
   {
-       0,     4,     5,     6,     7,     8,     9,    12,     3,     3,
-       3,     5,     5,     5,    10,     0,    13,    14,    12,    12
+       0,     4,     5,     6,     7,     8,     9,    13,     3,     3,
+       3,     5,     5,     5,    10,     0,    14,    11,    11,    11,
+      11,    11,    13,    15,    13
   };
 
   const signed char
    Parser ::yyr1_[] =
   {
-       0,    11,    13,    12,    12,    14,    12,    12,    12,    12,
-      12
+       0,    12,    14,    13,    13,    15,    13,    13,    13,    13,
+      13
   };
 
   const signed char
    Parser ::yyr2_[] =
   {
-       0,     2,     0,     4,     2,     0,     4,     2,     2,     2,
+       0,     2,     0,     4,     3,     0,     5,     3,     3,     3,
        2
   };
 
@@ -982,8 +994,8 @@ namespace yy {
   const  Parser ::yytname_[] =
   {
   "\"end of file\"", "error", "\"invalid token\"", "NL", "END", "NUMBER",
-  "AVANCE", "RECULE", "SAUTER", "TOURNER", "SENS", "$accept", "programme",
-  "$@1", "$@2", YY_NULLPTR
+  "AVANCE", "RECULE", "SAUTER", "TOURNER", "SENS", "IdTortue", "$accept",
+  "programme", "$@1", "$@2", YY_NULLPTR
   };
 #endif
 
@@ -1058,10 +1070,10 @@ namespace yy {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10
+       5,     6,     7,     8,     9,    10,    11
     };
     // Last valid token kind.
-    const int code_max = 265;
+    const int code_max = 266;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -1072,7 +1084,7 @@ namespace yy {
   }
 
 } // yy
-#line 1076 "parser.cc"
+#line 1088 "parser.cc"
 
 #line 73 "../parser/parser.yy"
 

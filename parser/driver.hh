@@ -38,10 +38,10 @@ public:
 #endif
 
 
-class Tortue{
-    Tortue(int x, int y): _x(x), _y(y){}
+// class Tortue{
+//     Tortue(int x, int y): _x(x), _y(y){}
     
-private:
-    int _x;
-    int _y;
-}
+// private:
+//     int _x;
+//     int _y;
+// }

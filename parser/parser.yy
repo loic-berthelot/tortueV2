@@ -41,7 +41,7 @@
 %token                  SAUTER
 %token                  TOURNER
 %token <int>            SENS
-
+%token <int>            IdTortue
 
 %%
 
@@ -51,20 +51,20 @@ programme:
         driver.setVariable("a",$1);
         std::cout <<driver.getVariable("a") << std::endl;
     } programme
-    | AVANCE NL {
-        driver.avancerTortue(0, 1);
+    | AVANCE NL IdTortue{
+        driver.avancerTortue($3, 1);
     }
-    | AVANCE NUMBER {
-        driver.avancerTortue(0, $2);
+    | AVANCE NUMBER IdTortue{
+        driver.avancerTortue($3, $2);
     } programme
-    | RECULE NUMBER {
-        driver.avancerTortue(0, - $2);
+    | RECULE NUMBER IdTortue{
+        driver.avancerTortue($3, - $2);
     }
-    | SAUTER NUMBER {
-        driver.sauter(0);
+    | SAUTER NUMBER IdTortue{
+        driver.sauter($3);
     }
-    | TOURNER SENS {
-        driver.tourner(0, $2);
+    | TOURNER SENS IdTortue{
+        driver.tourner($3, $2);
     }
     | END NL {
         YYACCEPT;
@@ -74,8 +74,4 @@ programme:
 
 void yy::Parser::error( const location_type &l, const std::string & err_msg) {
     std::cerr << "Erreur : " << l << ", " << err_msg << std::endl;
-}
-
-void test(){
-    std::cout<<"test2";
 }

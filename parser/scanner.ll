@@ -57,6 +57,11 @@ fin return token::END;
     return token::NUMBER;
 }
 
+@[0-9]+   {
+    yylval->build<int>(std::atoi(yytext));
+    return token::IdTortue;
+}
+
 "\n"          {
     loc->lines();
     return token::NL;

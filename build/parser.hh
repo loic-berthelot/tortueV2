@@ -406,6 +406,7 @@ namespace yy {
     {
       // NUMBER
       // SENS
+      // IdTortue
       char dummy1[sizeof (int)];
     };
 
@@ -465,7 +466,8 @@ namespace yy {
     RECULE = 262,                  // RECULE
     SAUTER = 263,                  // SAUTER
     TOURNER = 264,                 // TOURNER
-    SENS = 265                     // SENS
+    SENS = 265,                    // SENS
+    IdTortue = 266                 // IdTortue
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -482,7 +484,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 11, ///< Number of tokens.
+        YYNTOKENS = 12, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -495,10 +497,11 @@ namespace yy {
         S_SAUTER = 8,                            // SAUTER
         S_TOURNER = 9,                           // TOURNER
         S_SENS = 10,                             // SENS
-        S_YYACCEPT = 11,                         // $accept
-        S_programme = 12,                        // programme
-        S_13_1 = 13,                             // $@1
-        S_14_2 = 14                              // $@2
+        S_IdTortue = 11,                         // IdTortue
+        S_YYACCEPT = 12,                         // $accept
+        S_programme = 13,                        // programme
+        S_14_1 = 14,                             // $@1
+        S_15_2 = 15                              // $@2
       };
     };
 
@@ -537,6 +540,7 @@ namespace yy {
     {
       case symbol_kind::S_NUMBER: // NUMBER
       case symbol_kind::S_SENS: // SENS
+      case symbol_kind::S_IdTortue: // IdTortue
         value.move< int > (std::move (that.value));
         break;
 
@@ -601,6 +605,7 @@ switch (yykind)
     {
       case symbol_kind::S_NUMBER: // NUMBER
       case symbol_kind::S_SENS: // SENS
+      case symbol_kind::S_IdTortue: // IdTortue
         value.template destroy< int > ();
         break;
 
@@ -714,7 +719,7 @@ switch (yykind)
 #endif
       {
         YY_ASSERT (tok == token::NUMBER
-                   || tok == token::SENS);
+                   || (token::SENS <= tok && tok <= token::IdTortue));
       }
     };
 
@@ -930,6 +935,21 @@ switch (yykind)
       make_SENS (const int& v, const location_type& l)
       {
         return symbol_type (token::SENS, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_IdTortue (int v, location_type l)
+      {
+        return symbol_type (token::IdTortue, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_IdTortue (const int& v, const location_type& l)
+      {
+        return symbol_type (token::IdTortue, v, l);
       }
 #endif
 
@@ -1236,7 +1256,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 15,     ///< Last index in yytable_.
+      yylast_ = 25,     ///< Last index in yytable_.
       yynnts_ = 4,  ///< Number of nonterminal symbols.
       yyfinal_ = 15 ///< Termination state number.
     };
@@ -1250,7 +1270,7 @@ switch (yykind)
 
 
 } // yy
-#line 1254 "parser.hh"
+#line 1274 "parser.hh"
 
 
 
