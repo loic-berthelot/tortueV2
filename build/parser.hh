@@ -404,10 +404,20 @@ namespace yy {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
+      // operation
+      char dummy1[sizeof (ExpressionPtr)];
+
       // NUMBER
+      char dummy2[sizeof (float)];
+
       // SENS
       // IdTortue
-      char dummy1[sizeof (int)];
+      // expression
+      // selection
+      char dummy3[sizeof (int)];
+
+      // IDENT
+      char dummy4[sizeof (std::string)];
     };
 
     /// The size of the largest semantic type.
@@ -459,15 +469,22 @@ namespace yy {
     YYEOF = 0,                     // "end of file"
     YYerror = 256,                 // error
     YYUNDEF = 257,                 // "invalid token"
-    NL = 258,                      // NL
-    END = 259,                     // END
-    NUMBER = 260,                  // NUMBER
-    AVANCE = 261,                  // AVANCE
-    RECULE = 262,                  // RECULE
-    SAUTER = 263,                  // SAUTER
-    TOURNER = 264,                 // TOURNER
-    SENS = 265,                    // SENS
-    IdTortue = 266                 // IdTortue
+    AVANCE = 258,                  // AVANCE
+    RECULE = 259,                  // RECULE
+    SAUTE = 260,                   // SAUTE
+    TOURNE = 261,                  // TOURNE
+    SENS = 262,                    // SENS
+    IdTortue = 263,                // IdTortue
+    NL = 264,                      // NL
+    END = 265,                     // END
+    SI = 266,                      // SI
+    ALORS = 267,                   // ALORS
+    SINON = 268,                   // SINON
+    EGAL = 269,                    // EGAL
+    DIFFERENT = 270,               // DIFFERENT
+    NUMBER = 271,                  // NUMBER
+    IDENT = 272,                   // IDENT
+    NEG = 273                      // NEG
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -484,28 +501,42 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 12, ///< Number of tokens.
+        YYNTOKENS = 25, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
         S_YYUNDEF = 2,                           // "invalid token"
-        S_NL = 3,                                // NL
-        S_END = 4,                               // END
-        S_NUMBER = 5,                            // NUMBER
-        S_AVANCE = 6,                            // AVANCE
-        S_RECULE = 7,                            // RECULE
-        S_SAUTER = 8,                            // SAUTER
-        S_TOURNER = 9,                           // TOURNER
-        S_SENS = 10,                             // SENS
-        S_IdTortue = 11,                         // IdTortue
-        S_YYACCEPT = 12,                         // $accept
-        S_programme = 13,                        // programme
-        S_14_1 = 14,                             // $@1
-        S_15_2 = 15,                             // $@2
-        S_16_3 = 16,                             // $@3
-        S_17_4 = 17,                             // $@4
-        S_18_5 = 18,                             // $@5
-        S_19_6 = 19                              // $@6
+        S_AVANCE = 3,                            // AVANCE
+        S_RECULE = 4,                            // RECULE
+        S_SAUTE = 5,                             // SAUTE
+        S_TOURNE = 6,                            // TOURNE
+        S_SENS = 7,                              // SENS
+        S_IdTortue = 8,                          // IdTortue
+        S_NL = 9,                                // NL
+        S_END = 10,                              // END
+        S_SI = 11,                               // SI
+        S_ALORS = 12,                            // ALORS
+        S_SINON = 13,                            // SINON
+        S_EGAL = 14,                             // EGAL
+        S_DIFFERENT = 15,                        // DIFFERENT
+        S_NUMBER = 16,                           // NUMBER
+        S_IDENT = 17,                            // IDENT
+        S_18_ = 18,                              // '-'
+        S_19_ = 19,                              // '+'
+        S_20_ = 20,                              // '*'
+        S_21_ = 21,                              // '/'
+        S_NEG = 22,                              // NEG
+        S_23_ = 23,                              // '('
+        S_24_ = 24,                              // ')'
+        S_YYACCEPT = 25,                         // $accept
+        S_programme = 26,                        // programme
+        S_27_1 = 27,                             // $@1
+        S_28_2 = 28,                             // $@2
+        S_29_3 = 29,                             // $@3
+        S_30_4 = 30,                             // $@4
+        S_expression = 31,                       // expression
+        S_selection = 32,                        // selection
+        S_operation = 33                         // operation
       };
     };
 
@@ -542,10 +573,23 @@ namespace yy {
       {
         switch (this->kind ())
     {
+      case symbol_kind::S_operation: // operation
+        value.move< ExpressionPtr > (std::move (that.value));
+        break;
+
       case symbol_kind::S_NUMBER: // NUMBER
+        value.move< float > (std::move (that.value));
+        break;
+
       case symbol_kind::S_SENS: // SENS
       case symbol_kind::S_IdTortue: // IdTortue
+      case symbol_kind::S_expression: // expression
+      case symbol_kind::S_selection: // selection
         value.move< int > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_IDENT: // IDENT
+        value.move< std::string > (std::move (that.value));
         break;
 
       default:
@@ -572,6 +616,34 @@ namespace yy {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ExpressionPtr&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ExpressionPtr& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, float&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const float& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, int&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
@@ -579,6 +651,20 @@ namespace yy {
       {}
 #else
       basic_symbol (typename Base::kind_type t, const int& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::string&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::string& v, const location_type& l)
         : Base (t)
         , value (v)
         , location (l)
@@ -607,10 +693,23 @@ namespace yy {
         // Value type destructor.
 switch (yykind)
     {
+      case symbol_kind::S_operation: // operation
+        value.template destroy< ExpressionPtr > ();
+        break;
+
       case symbol_kind::S_NUMBER: // NUMBER
+        value.template destroy< float > ();
+        break;
+
       case symbol_kind::S_SENS: // SENS
       case symbol_kind::S_IdTortue: // IdTortue
+      case symbol_kind::S_expression: // expression
+      case symbol_kind::S_selection: // selection
         value.template destroy< int > ();
+        break;
+
+      case symbol_kind::S_IDENT: // IDENT
+        value.template destroy< std::string > ();
         break;
 
       default:
@@ -711,8 +810,24 @@ switch (yykind)
 #endif
       {
         YY_ASSERT (tok == token::YYEOF
-                   || (token::YYerror <= tok && tok <= token::END)
-                   || (token::AVANCE <= tok && tok <= token::TOURNER));
+                   || (token::YYerror <= tok && tok <= token::TOURNE)
+                   || (token::NL <= tok && tok <= token::DIFFERENT)
+                   || tok == 45
+                   || tok == 43
+                   || tok == 42
+                   || tok == 47
+                   || tok == token::NEG
+                   || (40 <= tok && tok <= 41));
+      }
+#if 201103L <= YY_CPLUSPLUS
+      symbol_type (int tok, float v, location_type l)
+        : super_type(token_type (tok), std::move (v), std::move (l))
+#else
+      symbol_type (int tok, const float& v, const location_type& l)
+        : super_type(token_type (tok), v, l)
+#endif
+      {
+        YY_ASSERT (tok == token::NUMBER);
       }
 #if 201103L <= YY_CPLUSPLUS
       symbol_type (int tok, int v, location_type l)
@@ -722,8 +837,17 @@ switch (yykind)
         : super_type(token_type (tok), v, l)
 #endif
       {
-        YY_ASSERT (tok == token::NUMBER
-                   || (token::SENS <= tok && tok <= token::IdTortue));
+        YY_ASSERT ((token::SENS <= tok && tok <= token::IdTortue));
+      }
+#if 201103L <= YY_CPLUSPLUS
+      symbol_type (int tok, std::string v, location_type l)
+        : super_type(token_type (tok), std::move (v), std::move (l))
+#else
+      symbol_type (int tok, const std::string& v, const location_type& l)
+        : super_type(token_type (tok), v, l)
+#endif
+      {
+        YY_ASSERT (tok == token::IDENT);
       }
     };
 
@@ -824,51 +948,6 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_NL (location_type l)
-      {
-        return symbol_type (token::NL, std::move (l));
-      }
-#else
-      static
-      symbol_type
-      make_NL (const location_type& l)
-      {
-        return symbol_type (token::NL, l);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_END (location_type l)
-      {
-        return symbol_type (token::END, std::move (l));
-      }
-#else
-      static
-      symbol_type
-      make_END (const location_type& l)
-      {
-        return symbol_type (token::END, l);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_NUMBER (int v, location_type l)
-      {
-        return symbol_type (token::NUMBER, std::move (v), std::move (l));
-      }
-#else
-      static
-      symbol_type
-      make_NUMBER (const int& v, const location_type& l)
-      {
-        return symbol_type (token::NUMBER, v, l);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
       make_AVANCE (location_type l)
       {
         return symbol_type (token::AVANCE, std::move (l));
@@ -899,31 +978,31 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_SAUTER (location_type l)
+      make_SAUTE (location_type l)
       {
-        return symbol_type (token::SAUTER, std::move (l));
+        return symbol_type (token::SAUTE, std::move (l));
       }
 #else
       static
       symbol_type
-      make_SAUTER (const location_type& l)
+      make_SAUTE (const location_type& l)
       {
-        return symbol_type (token::SAUTER, l);
+        return symbol_type (token::SAUTE, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_TOURNER (location_type l)
+      make_TOURNE (location_type l)
       {
-        return symbol_type (token::TOURNER, std::move (l));
+        return symbol_type (token::TOURNE, std::move (l));
       }
 #else
       static
       symbol_type
-      make_TOURNER (const location_type& l)
+      make_TOURNE (const location_type& l)
       {
-        return symbol_type (token::TOURNER, l);
+        return symbol_type (token::TOURNE, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -954,6 +1033,156 @@ switch (yykind)
       make_IdTortue (const int& v, const location_type& l)
       {
         return symbol_type (token::IdTortue, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_NL (location_type l)
+      {
+        return symbol_type (token::NL, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_NL (const location_type& l)
+      {
+        return symbol_type (token::NL, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_END (location_type l)
+      {
+        return symbol_type (token::END, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_END (const location_type& l)
+      {
+        return symbol_type (token::END, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_SI (location_type l)
+      {
+        return symbol_type (token::SI, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_SI (const location_type& l)
+      {
+        return symbol_type (token::SI, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_ALORS (location_type l)
+      {
+        return symbol_type (token::ALORS, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_ALORS (const location_type& l)
+      {
+        return symbol_type (token::ALORS, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_SINON (location_type l)
+      {
+        return symbol_type (token::SINON, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_SINON (const location_type& l)
+      {
+        return symbol_type (token::SINON, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_EGAL (location_type l)
+      {
+        return symbol_type (token::EGAL, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_EGAL (const location_type& l)
+      {
+        return symbol_type (token::EGAL, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_DIFFERENT (location_type l)
+      {
+        return symbol_type (token::DIFFERENT, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_DIFFERENT (const location_type& l)
+      {
+        return symbol_type (token::DIFFERENT, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_NUMBER (float v, location_type l)
+      {
+        return symbol_type (token::NUMBER, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_NUMBER (const float& v, const location_type& l)
+      {
+        return symbol_type (token::NUMBER, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_IDENT (std::string v, location_type l)
+      {
+        return symbol_type (token::IDENT, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_IDENT (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::IDENT, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_NEG (location_type l)
+      {
+        return symbol_type (token::NEG, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_NEG (const location_type& l)
+      {
+        return symbol_type (token::NEG, l);
       }
 #endif
 
@@ -1260,9 +1489,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 24,     ///< Last index in yytable_.
-      yynnts_ = 8,  ///< Number of nonterminal symbols.
-      yyfinal_ = 15 ///< Termination state number.
+      yylast_ = 42,     ///< Last index in yytable_.
+      yynnts_ = 9,  ///< Number of nonterminal symbols.
+      yyfinal_ = 16 ///< Termination state number.
     };
 
 
@@ -1274,7 +1503,7 @@ switch (yykind)
 
 
 } // yy
-#line 1278 "parser.hh"
+#line 1507 "parser.hh"
 
 
 
