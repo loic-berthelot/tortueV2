@@ -92,6 +92,11 @@ bool JardinRendering::estMur(int x, int y){
      return false;
 }
 
+
+unsigned int JardinRendering::nbTortues() {
+    return tortues.size();
+}
+
 void JardinRendering::changeTailleJardin(int w, int h){
      fenetre = QSize(w,h);
      emit sizeFenetre(w,h);

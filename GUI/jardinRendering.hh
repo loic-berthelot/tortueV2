@@ -83,6 +83,7 @@ public:
     QSize tailleJardin(){return fenetre;};
     void changeTailleJardin(int w, int h);
     bool estMur(int x, int y);
+    unsigned int nbTortues();
 
 signals:
     void newTortue(int x, int y);

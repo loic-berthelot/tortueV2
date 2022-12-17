@@ -32,28 +32,47 @@ void Driver::changerPositionTortue(int n,int x, int y) {
 }
 
 void Driver::avancerTortue(int n, int steps){
-    int a = getJardin()->position(n).x();
-    int b = getJardin()->position(n).y();
-    
-    int o = getJardin()->orientation(n)/90; //la tortue commence par regarder en haut
-
-    int x, y;
-    switch (o)
-    {
-        case(0) : x =0; y = -1; break;
-        case(1) : x =1; y = 0; break;
-        case(2) : x =0; y = 1; break;
-        case(3) : x =-1; y = 0; break;
+    // on prépare les indices de début et de fin de boucle afin de savoir quelles tortues sélectionner
+    unsigned int imin, imax;
+    if (n == -1) { // si n vaut -1, on sélectionne toutes les tortues
+        imin = 0;
+        imax = getJardin()->nbTortues()-1; // La fonction nbTortues() a été ajoutée à JardinRendering
+    } else {
+        imin = n;
+        imax = n;
     }
-    getJardin()->changePosition(n,a+steps*x, b+steps*y);
-    std::cout << "ok";
+    for (unsigned int i = imin; i <= imax; i++) {
+        int x, y;
+
+        int oldx = getJardin()->position(i).x();
+        int oldy = getJardin()->position(i).y();    
+        int orientation = getJardin()->orientation(i)/90; //la tortue commence par regarder en haut
+
+        switch (orientation) // on cherche à obtenir une direction de mouvement à partir de l'orientation de la tortue
+        {
+            case(0) : x =0; y = -1; break;
+            case(1) : x =1; y = 0; break;
+            case(2) : x =0; y = 1; break;
+            case(3) : x =-1; y = 0; break;
+        }
+        getJardin()->changePosition(i,oldx+steps*x, oldy+steps*y);
+    }
 }
 
 void Driver::sauter(int n){
-    int a = getJardin()->position(0).x();
-    int b = getJardin()->position(0).y();
-    
-    getJardin()->changePosition(n,a+2,b);
+    unsigned int imin, imax;
+    if (n == -1) { // si n vaut -1, on sélectionne toutes les tortues
+        imin = 0;
+        imax = getJardin()->nbTortues()-1; // La fonction nbTortues() a été ajoutée à JardinRendering
+    } else {
+        imin = n;
+        imax = n;
+    }
+    for (unsigned int i = imin; i <= imax; i++) {
+        int a = getJardin()->position(i).x();
+        int b = getJardin()->position(i).y();        
+        getJardin()->changePosition(i,a+2,b);   
+    }
 }
 
 float    Driver::obtenirOrientationTortue(int n) { //implémenter le fait de tourner plusieurs fois
@@ -61,6 +80,14 @@ float    Driver::obtenirOrientationTortue(int n) { //implémenter le fait de tou
 }
 
 void   Driver::tourner(int n, int s) {
-   getJardin()->changeOrientation(n, getJardin()->orientation(n)+90*s);
+    unsigned int imin, imax;
+    if (n == -1) { // si n vaut -1, on sélectionne toutes les tortues
+        imin = 0;
+        imax = getJardin()->nbTortues()-1; // La fonction nbTortues() a été ajoutée à JardinRendering
+    } else {
+        imin = n;
+        imax = n;
+    }
+    for (unsigned int i = imin; i <= imax; i++) getJardin()->changeOrientation(i, getJardin()->orientation(i)+90*s);
 }
 

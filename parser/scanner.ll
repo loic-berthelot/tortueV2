@@ -28,6 +28,10 @@ using token = yy::Parser::token;
 
 fin return token::END;
 
+--.* {
+    return token::COMMENT;
+}
+
 "avance" {
     return token::AVANCE;
 }
@@ -36,11 +40,12 @@ fin return token::END;
     return token::RECULE;
 }
 
-"sauter" {
-    return token::SAUTER;
+"saute" {
+    return token::SAUTE;
 }
-"tourner" {
-    return token::TOURNER;
+
+"tourne" {
+    return token::TOURNE;
 }
 
 "à droite" {
@@ -52,9 +57,9 @@ fin return token::END;
     yylval->build<int>(-1);
     return token::SENS;
 }
-[0-9]+      {
-    
-    yylval->build<int>(std::atoi(yytext));
+
+[0-9]+      {    
+    yylval->build<float>(std::atof(yytext));
     return token::NUMBER;
 }
 
@@ -68,6 +73,17 @@ fin return token::END;
     loc->lines();
     return token::NL;
 }
+
+
+"+" return '+';
+"*" return '*';
+"-" return '-';
+"/" return '/';
+"(" return '(';
+")" return ')';
+"=" return '=';
+
+"fois" return token::FOIS;
 
 
 %%
