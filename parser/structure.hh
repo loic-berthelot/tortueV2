@@ -1,10 +1,6 @@
 #include <vector>
 #include <string>
 
-class Noeud{
-    //continent l'instruction à lancer
-};
-
 
 /* 
 *   L'arbre contient l'instruction à executer
