@@ -26,10 +26,26 @@ using token = yy::Parser::token;
 %}
 
 
-fin return token::END;
+"fin" {
+    return token::END;
+}
 
 --.* {
     return token::COMMENT;
+}
+
+"si" {
+    return token::SI;
+}
+
+"mur" {
+    yylval->build<int>(1);
+    return token::CONDITION;
+}
+
+"vide" {
+    yylval->build<int>(0);
+    return token::CONDITION|;
 }
 
 "avance" {
@@ -46,6 +62,16 @@ fin return token::END;
 
 "tourne" {
     return token::TOURNE;
+}
+
+"devant" {
+    yylval->build<int>(0);
+    return token::SENS;
+}
+
+"derriere" {
+    yylval->build<int>(2);
+    return token::SENS;
 }
 
 "à droite" {

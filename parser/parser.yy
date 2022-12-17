@@ -39,6 +39,7 @@
 %token                  TOURNE
 %token <int>            SENS
 %token <int>            IdTortue
+%token <int>            DIRECTION
 
 %token                  NL
 %token                  END
@@ -51,7 +52,7 @@
 %token <std::string>    IDENT
 %token                  FOIS
 %token                  COMMENT
-
+%token <int>            CONDITION
 
 %type                   comment
 %type                   fois
@@ -72,6 +73,9 @@ programme:
     }
 
 instruction :
+    | SI CONDITION SENS {
+        
+    }
     | AVANCE expression selection {
         driver.avancerTortue($3, $2);
     }
