@@ -2,6 +2,8 @@
 #include <string>
 
 
+
+
 /* 
 *   L'arbre contient l'instruction à executer
 *   On fait un parcour par largeur de l'arbre
@@ -11,9 +13,25 @@
 class Arbre{
 private:
     std::vector<Arbre> fils;
-    std::string _instruction; //peut être pas un string, contient l'instruction à executer
 public:
     Arbre(std::string _instruction);
-    void parcourir();
-    void ajouterFils(std::string _instruction);
+    virtual void parcourir();
+    virtual void ajouterFils(std::string _instruction);
 };
+
+class tantque : public Arbre {
+
+};
+
+class repete : public Arbre {
+
+};
+
+class if : public Arbre {
+
+};
+
+class Feuille  {
+private:
+    std::string _instruction; //peut être pas un string, contient l'instruction à executer
+}
