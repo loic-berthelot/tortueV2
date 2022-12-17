@@ -28,6 +28,10 @@ using token = yy::Parser::token;
 
 fin return token::END;
 
+--.* {
+    return token::COMMENT;
+}
+
 "avance" {
     return token::AVANCE;
 }
@@ -78,5 +82,8 @@ fin return token::END;
 "(" return '(';
 ")" return ')';
 "=" return '=';
+
+"fois" return token::FOIS;
+
 
 %%

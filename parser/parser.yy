@@ -49,7 +49,12 @@
 %token                  DIFFERENT
 %token <float>          NUMBER
 %token <std::string>    IDENT
+%token                  FOIS
+%token                  COMMENT
 
+
+%type                   comment
+%type                   fois
 %type <int>             expression
 %type <int>             selection
 %type <ExpressionPtr>   operation
@@ -61,30 +66,40 @@
 
 // on devrait mettre toutes les instructions dans un arbre et les exécuter seulement lorsque l'utilisateur met fin
 programme:
-    | AVANCE expression selection NL{
-        driver.avancerTortue($3, $2);
-    } programme
-    | RECULE expression selection NL{
-        driver.avancerTortue($3, - $2);
-    } programme
-    | SAUTE expression selection NL{
-        driver.sauter($3);
-    } programme
-    | TOURNE SENS selection NL{
-        driver.tourner($3, $2);
-    } programme
-    | END NL {
+    instruction comment NL programme
+    | END {
         YYACCEPT;
     }
 
+instruction :
+    | AVANCE expression selection {
+        driver.avancerTortue($3, $2);
+    }
+    | RECULE expression selection {
+        driver.avancerTortue($3, - $2);
+    }
+    | SAUTE expression selection {
+        driver.sauter($3);
+    }
+    | TOURNE SENS selection {
+        driver.tourner($3, $2);
+    }
 
 expression:
-    operation {
+    operation fois {
         $$ = (int)$1->calculer(driver.getContexte());
     }
     | {
         $$ = 1;
     }
+
+comment:
+    COMMENT
+    | {}
+
+fois:
+    FOIS {}
+    | {}
 
 selection:
     IdTortue {

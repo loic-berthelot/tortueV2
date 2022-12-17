@@ -484,7 +484,9 @@ namespace yy {
     DIFFERENT = 270,               // DIFFERENT
     NUMBER = 271,                  // NUMBER
     IDENT = 272,                   // IDENT
-    NEG = 273                      // NEG
+    FOIS = 273,                    // FOIS
+    COMMENT = 274,                 // COMMENT
+    NEG = 275                      // NEG
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -501,7 +503,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 25, ///< Number of tokens.
+        YYNTOKENS = 27, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -521,22 +523,23 @@ namespace yy {
         S_DIFFERENT = 15,                        // DIFFERENT
         S_NUMBER = 16,                           // NUMBER
         S_IDENT = 17,                            // IDENT
-        S_18_ = 18,                              // '-'
-        S_19_ = 19,                              // '+'
-        S_20_ = 20,                              // '*'
-        S_21_ = 21,                              // '/'
-        S_NEG = 22,                              // NEG
-        S_23_ = 23,                              // '('
-        S_24_ = 24,                              // ')'
-        S_YYACCEPT = 25,                         // $accept
-        S_programme = 26,                        // programme
-        S_27_1 = 27,                             // $@1
-        S_28_2 = 28,                             // $@2
-        S_29_3 = 29,                             // $@3
-        S_30_4 = 30,                             // $@4
-        S_expression = 31,                       // expression
-        S_selection = 32,                        // selection
-        S_operation = 33                         // operation
+        S_FOIS = 18,                             // FOIS
+        S_COMMENT = 19,                          // COMMENT
+        S_20_ = 20,                              // '-'
+        S_21_ = 21,                              // '+'
+        S_22_ = 22,                              // '*'
+        S_23_ = 23,                              // '/'
+        S_NEG = 24,                              // NEG
+        S_25_ = 25,                              // '('
+        S_26_ = 26,                              // ')'
+        S_YYACCEPT = 27,                         // $accept
+        S_programme = 28,                        // programme
+        S_instruction = 29,                      // instruction
+        S_expression = 30,                       // expression
+        S_comment = 31,                          // comment
+        S_fois = 32,                             // fois
+        S_selection = 33,                        // selection
+        S_operation = 34                         // operation
       };
     };
 
@@ -812,6 +815,7 @@ switch (yykind)
         YY_ASSERT (tok == token::YYEOF
                    || (token::YYerror <= tok && tok <= token::TOURNE)
                    || (token::NL <= tok && tok <= token::DIFFERENT)
+                   || (token::FOIS <= tok && tok <= token::COMMENT)
                    || tok == 45
                    || tok == 43
                    || tok == 42
@@ -1173,6 +1177,36 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_FOIS (location_type l)
+      {
+        return symbol_type (token::FOIS, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_FOIS (const location_type& l)
+      {
+        return symbol_type (token::FOIS, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_COMMENT (location_type l)
+      {
+        return symbol_type (token::COMMENT, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_COMMENT (const location_type& l)
+      {
+        return symbol_type (token::COMMENT, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_NEG (location_type l)
       {
         return symbol_type (token::NEG, std::move (l));
@@ -1262,7 +1296,7 @@ switch (yykind)
 
 #if YYDEBUG
     // YYRLINE[YYN] -- Source line where rule number YYN was defined.
-    static const signed char yyrline_[];
+    static const unsigned char yyrline_[];
     /// Report on the debug stream that the rule \a r is going to be reduced.
     virtual void yy_reduce_print_ (int r) const;
     /// Print the state stack on the debug stream.
@@ -1489,8 +1523,8 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 42,     ///< Last index in yytable_.
-      yynnts_ = 9,  ///< Number of nonterminal symbols.
+      yylast_ = 36,     ///< Last index in yytable_.
+      yynnts_ = 8,  ///< Number of nonterminal symbols.
       yyfinal_ = 16 ///< Termination state number.
     };
 
@@ -1503,7 +1537,7 @@ switch (yykind)
 
 
 } // yy
-#line 1507 "parser.hh"
+#line 1541 "parser.hh"
 
 
 
