@@ -1,6 +1,6 @@
 #include <vector>
 #include <string>
-
+#include <memory>
 
 
 
@@ -12,26 +12,27 @@
 */
 class Arbre{
 private:
-    std::vector<Arbre> fils;
+    std::vector<std::shared_ptr<Arbre>> fils;
 public:
-    Arbre(std::string _instruction);
+    Arbre();
     virtual void parcourir();
     virtual void ajouterFils(std::string _instruction);
+    virtual void ajouterFils();
 };
 
-class tantque : public Arbre {
-
-};
-
-class repete : public Arbre {
+class Tantque : public Arbre {
 
 };
 
-class if : public Arbre {
+class Repete : public Arbre {
 
+};
+
+class Ifelse : public Arbre {
+    
 };
 
 class Feuille  {
 private:
     std::string _instruction; //peut être pas un string, contient l'instruction à executer
-}
+};
