@@ -734,7 +734,7 @@ case 11:
 YY_RULE_SETUP
 #line 73 "../parser/scanner.ll"
 {
-    loc->lines();
+    //loc->lines();
     return token::NL;
 }
 	YY_BREAK
