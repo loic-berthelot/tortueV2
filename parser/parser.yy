@@ -14,7 +14,8 @@
     #include "expressionUnaire.hh"
     #include "constante.hh"
     #include "variable.hh"
-    
+    #include "structure.hh"
+
     class Scanner;
     class Driver;
 }
@@ -44,8 +45,10 @@
 %token                  NL
 %token                  END
 %token                  SI
-%token                  ALORS
 %token                  SINON
+%token                  DOUBLEPOINT
+%token                  FONCTION
+%token                  MAIN
 %token                  EGAL
 %token                  DIFFERENT
 %token <float>          NUMBER
@@ -57,8 +60,11 @@
 %type                   comment
 %type                   fois
 %type <int>             expression
+%type <VerifPtr>        verification
 %type <int>             selection
 %type <ExpressionPtr>   operation
+%type <InstPtr>         action
+%type <InstPtr>         instruction
 %left '-' '+'
 %left '*' '/'
 %precedence  NEG
@@ -67,26 +73,38 @@
 
 // on devrait mettre toutes les instructions dans un arbre et les exécuter seulement lorsque l'utilisateur met fin
 programme:
-    instruction comment NL programme
-    | END {
+    FONCTION MAIN NL instruction END MAIN NL{
+        $4->parcourir(driver);
         YYACCEPT;
     }
 
 instruction :
-    | SI CONDITION SENS {
-        
+    | SI verification NL instruction SINON NL instruction END SI{
+        auto res = std::make_shared<Si>($2);
+        res->ajouterFils($4);
+        res->ajouterFils($7);
+        $$ = res;
     }
-    | AVANCE expression selection {
-        driver.avancerTortue($3, $2);
+    | instruction comment NL 
+    | action
+
+action :
+    AVANCE expression selection {
+        $$ = std::make_shared<Action>("avance", $3, $2);
     }
     | RECULE expression selection {
-        driver.avancerTortue($3, - $2);
+        $$ = std::make_shared<Action>("avance", $3, -$2);
     }
-    | SAUTE expression selection {
-        driver.sauter($3);
+    | SAUTE expression selection {        
+        $$ = std::make_shared<Action>("saute", $3, 0);
     }
     | TOURNE SENS selection {
-        driver.tourner($3, $2);
+        $$ = std::make_shared<Action>("tourne", $3, $2);
+    }
+
+verification:
+    CONDITION SENS DOUBLEPOINT{
+        $$ = std::make_shared<Verification>($1, $2);
     }
 
 expression:

@@ -50,10 +50,15 @@ void Driver::avancerTortue(int n, int steps){
 
         switch (orientation) // on cherche à obtenir une direction de mouvement à partir de l'orientation de la tortue
         {
-            case(0) : x =0; y = -1; break;
-            case(1) : x =1; y = 0; break;
-            case(2) : x =0; y = 1; break;
-            case(3) : x =-1; y = 0; break;
+            case(0) : 
+                x =0; y = -1; break;
+            case(1) : 
+            default :
+                x =1; y = 0; break;
+            case(2) : 
+                x =0; y = 1; break;
+            case(3) : 
+                x =-1; y = 0; break;
         }
         getJardin()->changePosition(i,oldx+steps*x, oldy+steps*y);
     }

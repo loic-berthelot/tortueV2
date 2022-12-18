@@ -38,6 +38,22 @@ using token = yy::Parser::token;
     return token::SI;
 }
 
+"sinon" {
+    return token::SINON;
+}
+
+":" {
+    return token::DOUBLEPOINT;
+}
+
+"fonction" {
+    return token::FONCTION;
+}
+
+"main" {
+    return token::MAIN;
+}
+
 "mur" {
     yylval->build<int>(1);
     return token::CONDITION;
@@ -45,7 +61,7 @@ using token = yy::Parser::token;
 
 "vide" {
     yylval->build<int>(0);
-    return token::CONDITION|;
+    return token::CONDITION;
 }
 
 "avance" {

@@ -1,7 +1,7 @@
 #include <vector>
 #include <string>
 #include <memory>
-
+#include "driver.hh"
 
 
 /* 
@@ -10,29 +10,68 @@
 *   Si l'instruction est une instruction simple (pas une boucle ou un if) on ajoute un
 *   
 */
-class Arbre{
+
+class Verification {
 private:
-    std::vector<std::shared_ptr<Arbre>> fils;
+    int _type;
+    int _direction;
 public:
-    Arbre();
-    virtual void parcourir();
-    virtual void ajouterFils(std::string _instruction);
-    virtual void ajouterFils();
+    Verification(int t, int d) : _type(t), _direction(d) {}
+    bool calculer() const;
 };
 
-class Tantque : public Arbre {
+class Instruction;
 
+using InstPtr = std::shared_ptr<Instruction>;
+using VerifPtr = std::shared_ptr<Verification>;
+
+class Instruction{//J'ai changé le nom de "Arbre", que je trouvais trop générique (c'est un peu comme appeler un entier 'nombre' nan ?)
+protected:
+    std::vector<InstPtr> _fils;
+    std::shared_ptr<Instruction> _parent;
+public:
+    Instruction() : _parent(nullptr){}
+    virtual void parcourir(Driver & driver) const=0;
+    void ajouterFils(InstPtr f) { _fils.push_back(f); }
+    std::shared_ptr<Instruction> fils(unsigned int i) { return _fils[i]; }
 };
 
-class Repete : public Arbre {
 
-};
-
-class Ifelse : public Arbre {
-    
-};
-
-class Feuille  {
+class TantQue : public Instruction {
 private:
-    std::string _instruction; //peut être pas un string, contient l'instruction à executer
+    VerifPtr _condition;
+public:
+    TantQue(VerifPtr cond) : _condition(cond) {}
+    void parcourir(Driver & driver) const override;
+};
+
+class Repete : public Instruction {
+private:
+    unsigned int _nbiterations;
+public:
+    Repete(unsigned int nbi) : _nbiterations(nbi) {}
+    void parcourir(Driver & driver) const override;
+};
+
+class Si : public Instruction { //J'ai changé le If en Si pour garder la cohérence des noms français de TantQue et Repete. Feel free to change
+private:
+    VerifPtr _condition;
+public:
+    Si(VerifPtr cond) : _condition(cond) {}
+    void parcourir(Driver & driver) const override;
+};
+
+class Bloc : public Instruction {
+public:
+    void parcourir(Driver & driver) const override;
+};
+
+class Action  : public Instruction {
+private:
+    std::string _type; //l'instruction à executer
+    int _p1;//le premier paramètre de l'instruction
+    int _p2;
+public:
+    Action(std::string const & t, int p1, int p2) : _type(t), _p1(p1), _p2(p2) {}
+    void parcourir(Driver & driver) const override;
 };
