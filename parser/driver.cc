@@ -96,3 +96,33 @@ void   Driver::tourner(int n, int s) {
     for (unsigned int i = imin; i <= imax; i++) getJardin()->changeOrientation(i, getJardin()->orientation(i)+90*s);
 }
 
+bool Driver::verif_mur(int n, int pos){
+    if(n==-1){
+        int imax = getJardin()->nbTortues()-1;
+        for(int i=0;i<imax;i++){
+            if(!mur_pos(i, pos))
+                return false;
+        }
+        return true;
+    }
+    return mur_pos(n, pos);
+}
+
+bool Driver::mur_pos(int n, int pos) {
+        switch (pos)
+    {
+    case -1:
+        return getJardin()->estMur(getJardin()->position(n).x()-1, getJardin()->position(n).y());
+        break;
+    case 0:
+        return getJardin()->estMur(getJardin()->position(n).x(), getJardin()->position(n).y()+1);
+        break;
+    case 1:
+        return getJardin()->estMur(getJardin()->position(n).x()+1, getJardin()->position(n).y());
+        break;
+    case 2:
+        return getJardin()->estMur(getJardin()->position(n).x(), getJardin()->position(n).y()-1);
+        break;
+    }
+    return false;
+}

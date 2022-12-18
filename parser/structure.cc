@@ -1,7 +1,13 @@
 #include "structure.hh"
 
-bool Verification::calculer() const{
-    return true;
+bool Verification::calculer(Driver & driver) const{
+    if(_type == 1){
+        return driver.mur_pos(_id, _direction);
+    }
+    else if(_type == 0){
+        return !driver.mur_pos(_id, _direction);
+    }
+    return false;
 }
 
 void Si::parcourir(Driver & driver) const {
@@ -10,7 +16,7 @@ void Si::parcourir(Driver & driver) const {
 }
 
 void TantQue::parcourir(Driver & driver) const {
-    while(_condition->calculer()) _fils[0]->parcourir(driver);
+    while(_condition->calculer(driver)) _fils[0]->parcourir(driver);
 }
 
 void Repete::parcourir(Driver & driver) const {

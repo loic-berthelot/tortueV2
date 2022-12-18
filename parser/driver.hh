@@ -24,24 +24,18 @@ public:
     void    setVariable(const std::string& name, double value);
     JardinRendering* getJardin();
 
-    void    changerPositionTortue(int n, int x, int y);
+    void changerPositionTortue(int n, int x, int y);
     
     void avancerTortue(int n, int x);
     
     void sauter(int n);
 
-    float    obtenirOrientationTortue(int n);
+    float obtenirOrientationTortue(int n);
  
     void tourner(int n, int s);
+    
+    bool verif_mur(int n, int pos);
+    bool mur_pos(int n, int pos);
 };
 
 #endif
-
-
-// class Tortue{
-//     Tortue(int x, int y): _x(x), _y(y){}
-    
-// private:
-//     int _x;
-//     int _y;
-// }

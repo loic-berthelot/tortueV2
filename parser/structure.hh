@@ -15,9 +15,10 @@ class Verification {
 private:
     int _type;
     int _direction;
+    int _id;
 public:
     Verification(int t, int d) : _type(t), _direction(d) {}
-    bool calculer() const;
+    bool calculer(Driver & driver) const;
 };
 
 class Instruction;
@@ -25,7 +26,7 @@ class Instruction;
 using InstPtr = std::shared_ptr<Instruction>;
 using VerifPtr = std::shared_ptr<Verification>;
 
-class Instruction{//J'ai changé le nom de "Arbre", que je trouvais trop générique (c'est un peu comme appeler un entier 'nombre' nan ?)
+class Instruction{//J'ai changé le nom de "Arbre", que je trouvais trop générique (c'est un peu comme appeler un entier 'nombre' nan ?) bah c'est l'objectif en même temps autant appelé un chat un chat
 protected:
     std::vector<InstPtr> _fils;
     std::shared_ptr<Instruction> _parent;
@@ -53,7 +54,7 @@ public:
     void parcourir(Driver & driver) const override;
 };
 
-class Si : public Instruction { //J'ai changé le If en Si pour garder la cohérence des noms français de TantQue et Repete. Feel free to change
+class Si : public Instruction {
 private:
     VerifPtr _condition;
 public:
