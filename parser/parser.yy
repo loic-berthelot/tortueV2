@@ -103,8 +103,8 @@ action :
     }
 
 verification:
-    CONDITION SENS DOUBLEPOINT{
-        $$ = std::make_shared<Verification>($1, $2);
+    CONDITION SENS selection DOUBLEPOINT{
+        $$ = std::make_shared<Verification>($1, $2, $3);
     }
 
 expression:

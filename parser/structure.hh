@@ -17,7 +17,7 @@ private:
     int _direction;
     int _id;
 public:
-    Verification(int t, int d) : _type(t), _direction(d) {}
+    Verification(int t, int d, int id) : _type(t), _direction(d), _id(id) {}
     bool calculer(Driver & driver) const;
 };
 
@@ -57,8 +57,9 @@ public:
 class Si : public Instruction {
 private:
     VerifPtr _condition;
+    int _id;
 public:
-    Si(VerifPtr cond) : _condition(cond) {}
+    Si(VerifPtr cond) : _condition(cond){}
     void parcourir(Driver & driver) const override;
 };
 

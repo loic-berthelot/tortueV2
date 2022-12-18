@@ -11,7 +11,7 @@ bool Verification::calculer(Driver & driver) const{
 }
 
 void Si::parcourir(Driver & driver) const {
-    if(_condition) _fils[0]->parcourir(driver);
+    if(_condition->calculer(driver)) _fils[0]->parcourir(driver);
     else _fils[1]->parcourir(driver);
 }
 
