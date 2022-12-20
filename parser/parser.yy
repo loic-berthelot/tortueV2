@@ -79,14 +79,15 @@ programme:
     }
 
 instruction :
-    | SI verification NL instruction SINON NL instruction END SI{
+    | SI verification NL instruction SINON NL instruction END SI instruction{
         auto res = std::make_shared<Si>($2);
         res->ajouterFils($4);
         res->ajouterFils($7);
         $$ = res;
     }
-    | instruction comment NL 
-    | action
+    | instruction comment NL instruction
+    | action NL instruction
+    | NL
 
 action :
     AVANCE expression selection {

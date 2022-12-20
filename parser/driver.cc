@@ -99,11 +99,11 @@ void   Driver::tourner(int n, int s) {
 bool Driver::verif_mur(int n, int pos){
     if(n==-1){
         int imax = getJardin()->nbTortues()-1;
-        for(int i=0;i<imax;i++){
-            if(!mur_pos(i, pos))
-                return false;
+        for(int i=0;i<=imax;i++){
+            if(mur_pos(i, pos))
+                return true;
         }
-        return true;
+        return false;
     }
     return mur_pos(n, pos);
 }
