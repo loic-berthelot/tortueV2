@@ -29,11 +29,13 @@ using VerifPtr = std::shared_ptr<Verification>;
 class Instruction{//J'ai changé le nom de "Arbre", que je trouvais trop générique (c'est un peu comme appeler un entier 'nombre' nan ?) bah c'est l'objectif en même temps autant appelé un chat un chat
 protected:
     std::vector<InstPtr> _fils;
-    std::shared_ptr<Instruction> _parent;
+    std::shared_ptr<Instruction> _parent; //pourquoi on a le parent ???
 public:
     Instruction() : _parent(nullptr){}
     virtual void parcourir(Driver & driver) const=0;
-    void ajouterFils(InstPtr f) { _fils.push_back(f); }
+    void ajouterFils(InstPtr f) { _fils.push_back(f); } //en gros à utiliser pour les structures de contrôles
+    void ajouterBloc() {_fils.push_back(Bloc())};       // à utiliser après la fin de chaque structue
+    void ajouterAction(InstPtr f) {_fils.back().ajouterFils(f);} //et à utiliser pour les actions directes
     std::shared_ptr<Instruction> fils(unsigned int i) { return _fils[i]; }
 };
 

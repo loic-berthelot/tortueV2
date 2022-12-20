@@ -1,11 +1,14 @@
 #pragma once
 #include "expression.hh"
+#include "driver.hh"
 
 enum class OperateurBinaire {
     plus,
     moins,
     divise,
-    multiplie
+    multiplie,
+    sens,
+    objet
 };
 
 class ExpressionBinaire : public Expression {
