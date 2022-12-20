@@ -89,6 +89,7 @@ instruction :
     | action NL instruction
     | NL
 
+//action should be added to block, 
 action :
     AVANCE expression selection {
         $$ = std::make_shared<Action>("avance", $3, $2);
