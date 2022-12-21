@@ -80,7 +80,9 @@ private:
     std::string _type; //l'instruction à executer
     int _p1;//le premier paramètre de l'instruction
     int _p2;
+    std::string _p3;
 public:
-    Action(std::string const & t, int p1, int p2) : _type(t), _p1(p1), _p2(p2) {}
+    Action(std::string const & t, int p1, int p2) : Action(t, p1, p2, 0) {}
+    Action(std::string const & t, int p1, int p2, std::string p3): _type(t), _p1(p1), _p2(p2), _p3(p3) {}
     void parcourir(Driver & driver) const override;
 };

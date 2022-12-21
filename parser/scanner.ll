@@ -88,6 +88,25 @@ using token = yy::Parser::token;
     return token::TOURNE;
 }
 
+"couleur" {
+    return token::MODIF_COULEUR;
+}
+
+"carapace" {
+    yylval->build<int>(0);
+    return token::MODE_COULEUR;
+}
+
+"motif" {
+    yylval->build<int>(1);
+    return token::MODE_COULEUR;
+}
+
+"#[AaBbCcDdEeFf1-9]{6}" {
+    yylval->build<std::string>(yytext);
+    return token::COULEUR;
+}
+
 "devant" {
     yylval->build<int>(0);
     return token::SENS;

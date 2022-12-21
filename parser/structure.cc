@@ -34,7 +34,12 @@ void Bloc::parcourir(Driver & driver) const {
 }
 
 void Action::parcourir(Driver & driver) const {
-    if (_type == "avance") driver.avancerTortue(_p1,_p2);
-    else if (_type == "saute") driver.sauter(_p1);
-    else if (_type == "tourne") driver.tourner(_p1,_p2);
+    if (_type == "avance") 
+        driver.avancerTortue(_p1,_p2);
+    else if (_type == "saute") 
+        driver.sauter(_p1);
+    else if (_type == "tourne") 
+        driver.tourner(_p1,_p2);
+    else if(_type == "couleur")
+        driver.modifier_couleur(_p1, _p2, _p3);
 }

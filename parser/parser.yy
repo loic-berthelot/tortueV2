@@ -41,6 +41,8 @@
 %token <int>            SENS
 %token <int>            IdTortue
 %token <int>            DIRECTION
+%token <int>            MODE_COULEUR
+%token <std::string>    COULEUR
 
 %token                  NL
 %token                  END
@@ -58,12 +60,14 @@
 %token <int>            CONDITION
 %token                  TANTQUE
 %token                  REPETE
+%token                  MODIF_COULEUR
 
 %type                   comment
 %type                   fois
 %type <int>             expression
 %type <VerifPtr>        verification
 %type <int>             selection
+%type <int>             mode
 %type <ExpressionPtr>   operation
 %type <InstPtr>         action
 %type <InstPtr>         instruction
@@ -93,7 +97,7 @@ instruction :
         res->ajouterFils($4);
         $$ = res;
     }
-    | TANTQUE verification NL instruction END SI{
+    | TANTQUE verification NL instruction END TANTQUE{
         auto res = std::make_shared<TantQue>($2);
         res->ajouterFils($4);
         $$ = res;
@@ -127,10 +131,21 @@ action :
     | TOURNE SENS selection {
         $$ = std::make_shared<Action>("tourne", $3, $2);
     }
+    | MODIF_COULEUR mode COULEUR selection {
+        $$ = std::make_shared<Action>("couleur", $4, $2, $3);
+    }
 
 verification:
     CONDITION SENS selection DOUBLEPOINT{
         $$ = std::make_shared<Verification>($1, $2, $3);
+    }
+
+mode:
+    MODE_COULEUR {
+        $$ = $1;
+    }
+    | {
+        $$ = 0;
     }
 
 expression:

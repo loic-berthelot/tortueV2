@@ -1,6 +1,7 @@
 #include "driver.hh"
 #include "jardinHandler.hh"
 #include <iostream>
+#include <sstream>
 
 Driver::Driver(JardinHandler * J) {
     monJardin = J;
@@ -125,4 +126,35 @@ bool Driver::mur_pos(int n, int pos) {
         break;
     }
     return false;
+}
+
+int convert_hexa(char n){
+    int result;
+    std::istringstream(std::string(1, n)) >> std::hex >> result;
+    return result;
+}
+
+void Driver::modifier_couleur(int n, int mode, std::string couleur){
+    if(couleur.size()!=7){
+        return;
+    } //offset of 1 because of the "#"
+    int red(convert_hexa(couleur.at(1))*16 + convert_hexa(couleur.at(2)));
+    int green(convert_hexa(couleur.at(3))*16 + convert_hexa(couleur.at(4)));
+    int blue(convert_hexa(couleur.at(5))*16 + convert_hexa(couleur.at(6)));
+
+    int imin(n);
+    int imax(n);
+    if (n == -1) { // si n vaut -1, on sélectionne toutes les tortues
+        imin = 0;
+        imax = getJardin()->nbTortues()-1; // La fonction nbTortues() a été ajoutée à JardinRendering
+    }
+
+    for (unsigned int i = imin; i <= imax; i++) {
+        if(!mode){ //mode = 0 correspond à la carapace
+            getJardin()->changeCouleurCarapace(i, red, green, blue);
+        }
+        else{
+            getJardin()->changeCouleurMotif(i, red, green, blue);
+        }
+    }
 }
