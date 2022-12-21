@@ -29,13 +29,17 @@ using VerifPtr = std::shared_ptr<Verification>;
 class Instruction{//J'ai changé le nom de "Arbre", que je trouvais trop générique (c'est un peu comme appeler un entier 'nombre' nan ?) bah c'est l'objectif en même temps autant appelé un chat un chat
 protected:
     std::vector<InstPtr> _fils;
-    std::shared_ptr<Instruction> _parent; //pourquoi on a le parent ???
 public:
-    Instruction() : _parent(nullptr){}
+    Instruction() {}
     virtual void parcourir(Driver & driver) const=0;
     void ajouterFils(InstPtr f) { _fils.push_back(f); } //en gros à utiliser pour les structures de contrôles
-    void ajouterBloc() {_fils.push_back(Bloc())};       // à utiliser après la fin de chaque structue
-    void ajouterAction(InstPtr f) {_fils.back().ajouterFils(f);} //et à utiliser pour les actions directes
+
+    //void ajouterBloc() {_fils.push_back(Bloc())};       // à utiliser après la fin de chaque structue
+    //On ne peut pas mettre un bloc (instance) dans un vecteur contenant des pointeurs. Et même en faisant un new, c'est quoi l'intérêt de différencier les blocs des autres types de fils alors que le polymorphisme permet justement de factoriser ?
+   
+    //void ajouterAction(InstPtr f) {_fils.back().ajouterFils(f);} //et à utiliser pour les actions directes
+    //Ca empêche de compiler. De toutes façons, à quoi ça sert ? On a déjà ajouterFils()
+
     std::shared_ptr<Instruction> fils(unsigned int i) { return _fils[i]; }
 };
 
@@ -67,6 +71,7 @@ public:
 
 class Bloc : public Instruction {
 public:
+    Bloc(InstPtr i1, InstPtr i2){ ajouterFils(i1); ajouterFils(i2); }
     void parcourir(Driver & driver) const override;
 };
 

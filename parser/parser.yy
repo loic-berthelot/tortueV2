@@ -56,6 +56,8 @@
 %token                  FOIS
 %token                  COMMENT
 %token <int>            CONDITION
+%token                  TANTQUE
+%token                  REPETE
 
 %type                   comment
 %type                   fois
@@ -73,23 +75,45 @@
 
 // on devrait mettre toutes les instructions dans un arbre et les exécuter seulement lorsque l'utilisateur met fin
 programme:
-    FONCTION MAIN NL instruction END MAIN NL{
-        $4->parcourir(driver);
+    FONCTION MAIN DOUBLEPOINT NL instruction END FONCTION NL{
+        $5->parcourir(driver);
         YYACCEPT;
     }
 
 instruction :
-    | SI verification NL instruction SINON NL instruction END SI instruction{
+    instruction comment NL
+    | SI verification NL instruction SINON NL instruction END SI {
         auto res = std::make_shared<Si>($2);
         res->ajouterFils($4);
         res->ajouterFils($7);
         $$ = res;
     }
-    | instruction comment NL instruction
-    | action NL instruction
-    | NL
+    | SI verification NL instruction END SI{
+        auto res = std::make_shared<Si>($2);
+        res->ajouterFils($4);
+        $$ = res;
+    }
+    | TANTQUE verification NL instruction END SI{
+        auto res = std::make_shared<TantQue>($2);
+        res->ajouterFils($4);
+        $$ = res;
+    }
+    | REPETE expression DOUBLEPOINT NL instruction END REPETE{
+        auto res = std::make_shared<Repete>($2);
+        res->ajouterFils($5);
+        $$ = res;
+    }
+    | SI verification NL instruction END SI{
+        auto res = std::make_shared<Si>($2);
+        res->ajouterFils($4);
+        $$ = res;
+    }
+    | action
+    | instruction instruction {
+        $$ = std::make_shared<Bloc>($1, $2);
+    }
 
-//action should be added to block, 
+
 action :
     AVANCE expression selection {
         $$ = std::make_shared<Action>("avance", $3, $2);

@@ -500,7 +500,9 @@ namespace yy {
     FOIS = 276,                    // FOIS
     COMMENT = 277,                 // COMMENT
     CONDITION = 278,               // CONDITION
-    NEG = 279                      // NEG
+    TANTQUE = 279,                 // TANTQUE
+    REPETE = 280,                  // REPETE
+    NEG = 281                      // NEG
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -517,7 +519,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 31, ///< Number of tokens.
+        YYNTOKENS = 33, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -543,23 +545,25 @@ namespace yy {
         S_FOIS = 21,                             // FOIS
         S_COMMENT = 22,                          // COMMENT
         S_CONDITION = 23,                        // CONDITION
-        S_24_ = 24,                              // '-'
-        S_25_ = 25,                              // '+'
-        S_26_ = 26,                              // '*'
-        S_27_ = 27,                              // '/'
-        S_NEG = 28,                              // NEG
-        S_29_ = 29,                              // '('
-        S_30_ = 30,                              // ')'
-        S_YYACCEPT = 31,                         // $accept
-        S_programme = 32,                        // programme
-        S_instruction = 33,                      // instruction
-        S_action = 34,                           // action
-        S_verification = 35,                     // verification
-        S_expression = 36,                       // expression
-        S_comment = 37,                          // comment
-        S_fois = 38,                             // fois
-        S_selection = 39,                        // selection
-        S_operation = 40                         // operation
+        S_TANTQUE = 24,                          // TANTQUE
+        S_REPETE = 25,                           // REPETE
+        S_26_ = 26,                              // '-'
+        S_27_ = 27,                              // '+'
+        S_28_ = 28,                              // '*'
+        S_29_ = 29,                              // '/'
+        S_NEG = 30,                              // NEG
+        S_31_ = 31,                              // '('
+        S_32_ = 32,                              // ')'
+        S_YYACCEPT = 33,                         // $accept
+        S_programme = 34,                        // programme
+        S_instruction = 35,                      // instruction
+        S_action = 36,                           // action
+        S_verification = 37,                     // verification
+        S_expression = 38,                       // expression
+        S_comment = 39,                          // comment
+        S_fois = 40,                             // fois
+        S_selection = 41,                        // selection
+        S_operation = 42                         // operation
       };
     };
 
@@ -886,6 +890,7 @@ switch (yykind)
                    || (token::YYerror <= tok && tok <= token::TOURNE)
                    || (token::NL <= tok && tok <= token::DIFFERENT)
                    || (token::FOIS <= tok && tok <= token::COMMENT)
+                   || (token::TANTQUE <= tok && tok <= token::REPETE)
                    || tok == 45
                    || tok == 43
                    || tok == 42
@@ -1338,6 +1343,36 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_TANTQUE (location_type l)
+      {
+        return symbol_type (token::TANTQUE, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_TANTQUE (const location_type& l)
+      {
+        return symbol_type (token::TANTQUE, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_REPETE (location_type l)
+      {
+        return symbol_type (token::REPETE, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_REPETE (const location_type& l)
+      {
+        return symbol_type (token::REPETE, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_NEG (location_type l)
       {
         return symbol_type (token::NEG, std::move (l));
@@ -1654,7 +1689,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 61,     ///< Last index in yytable_.
+      yylast_ = 118,     ///< Last index in yytable_.
       yynnts_ = 10,  ///< Number of nonterminal symbols.
       yyfinal_ = 4 ///< Termination state number.
     };
@@ -1668,7 +1703,7 @@ switch (yykind)
 
 
 } // yy
-#line 1672 "parser.hh"
+#line 1707 "parser.hh"
 
 
 

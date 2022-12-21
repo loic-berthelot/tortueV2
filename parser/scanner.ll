@@ -42,6 +42,14 @@ using token = yy::Parser::token;
     return token::SINON;
 }
 
+"repete" {
+    return token::REPETE;
+}
+
+"tant que" {
+    return token::TANTQUE;
+}
+
 ":" {
     return token::DOUBLEPOINT;
 }

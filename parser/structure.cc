@@ -14,7 +14,7 @@ bool Verification::calculer(Driver & driver) const{
 void Si::parcourir(Driver & driver) const {
     if(_condition->calculer(driver)) 
         _fils[0]->parcourir(driver);
-    else 
+    else if (_fils.size() > 1)
         _fils[1]->parcourir(driver);
 }
 
