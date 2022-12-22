@@ -64,7 +64,9 @@
 %token                  MODIF_COULEUR
 %token <std::string>    COULEUR
 %token <int>            MODE_COULEUR
-
+%token                  TORTUES
+%token                  JARDIN
+%token <std::string>    CHEMIN_JARDIN
 
 %type                   comment
 %type                   fois
@@ -142,6 +144,12 @@ action :
     }
     | MODIF_COULEUR mode COULEUR selection {
         $$ = std::make_shared<Action>("couleur", $4, $2, $3);
+    }
+    | TORTUES expression NL{
+        $$ = std::make_shared<Action>("tortues", $2);
+    }
+    | JARDIN CHEMIN_JARDIN{
+        $$ = std::make_shared<Action>("jardin", 0, 0, $2);
     }
 
 verification:

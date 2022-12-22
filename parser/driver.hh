@@ -38,6 +38,9 @@ public:
     bool mur_pos(int n, int pos);
 
     void modifier_couleur(int n, int mode, std::string couleur);
+
+    void ajouter_tortues(int n);
+    void chargerJardin(std::string nom);
 };
 
 #endif

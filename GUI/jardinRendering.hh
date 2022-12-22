@@ -84,6 +84,9 @@ public:
     void changeTailleJardin(int w, int h);
     bool estMur(int x, int y);
     unsigned int nbTortues();
+    void nettoyerJardin();
+
+    void ajouterTortue();
 
 signals:
     void newTortue(int x, int y);

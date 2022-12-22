@@ -102,3 +102,13 @@ void JardinRendering::changeTailleJardin(int w, int h){
      emit sizeFenetre(w,h);
 }
 
+void JardinRendering::ajouterTortue(){
+    tortues.push_back(new Tortue(0,0));
+    emit newTortue(0,0);
+}
+
+void JardinRendering::nettoyerJardin(){
+    tortues.clear();
+    murs.clear();
+    vides.clear();
+}

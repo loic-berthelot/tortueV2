@@ -430,6 +430,7 @@ namespace yy {
 
       // ID
       // COULEUR
+      // CHEMIN_JARDIN
       char dummy6[sizeof (std::string)];
     };
 
@@ -508,7 +509,10 @@ namespace yy {
     MODIF_COULEUR = 281,           // MODIF_COULEUR
     COULEUR = 282,                 // COULEUR
     MODE_COULEUR = 283,            // MODE_COULEUR
-    NEG = 284                      // NEG
+    TORTUES = 284,                 // TORTUES
+    JARDIN = 285,                  // JARDIN
+    CHEMIN_JARDIN = 286,           // CHEMIN_JARDIN
+    NEG = 287                      // NEG
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -525,7 +529,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 36, ///< Number of tokens.
+        YYNTOKENS = 39, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -556,25 +560,28 @@ namespace yy {
         S_MODIF_COULEUR = 26,                    // MODIF_COULEUR
         S_COULEUR = 27,                          // COULEUR
         S_MODE_COULEUR = 28,                     // MODE_COULEUR
-        S_29_ = 29,                              // '-'
-        S_30_ = 30,                              // '+'
-        S_31_ = 31,                              // '*'
-        S_32_ = 32,                              // '/'
-        S_NEG = 33,                              // NEG
-        S_34_ = 34,                              // '('
-        S_35_ = 35,                              // ')'
-        S_YYACCEPT = 36,                         // $accept
-        S_programme = 37,                        // programme
-        S_38_1 = 38,                             // $@1
-        S_instruction = 39,                      // instruction
-        S_action = 40,                           // action
-        S_verification = 41,                     // verification
-        S_mode = 42,                             // mode
-        S_expression = 43,                       // expression
-        S_comment = 44,                          // comment
-        S_fois = 45,                             // fois
-        S_selection = 46,                        // selection
-        S_operation = 47                         // operation
+        S_TORTUES = 29,                          // TORTUES
+        S_JARDIN = 30,                           // JARDIN
+        S_CHEMIN_JARDIN = 31,                    // CHEMIN_JARDIN
+        S_32_ = 32,                              // '-'
+        S_33_ = 33,                              // '+'
+        S_34_ = 34,                              // '*'
+        S_35_ = 35,                              // '/'
+        S_NEG = 36,                              // NEG
+        S_37_ = 37,                              // '('
+        S_38_ = 38,                              // ')'
+        S_YYACCEPT = 39,                         // $accept
+        S_programme = 40,                        // programme
+        S_41_1 = 41,                             // $@1
+        S_instruction = 42,                      // instruction
+        S_action = 43,                           // action
+        S_verification = 44,                     // verification
+        S_mode = 45,                             // mode
+        S_expression = 46,                       // expression
+        S_comment = 47,                          // comment
+        S_fois = 48,                             // fois
+        S_selection = 49,                        // selection
+        S_operation = 50                         // operation
       };
     };
 
@@ -641,6 +648,7 @@ namespace yy {
 
       case symbol_kind::S_ID: // ID
       case symbol_kind::S_COULEUR: // COULEUR
+      case symbol_kind::S_CHEMIN_JARDIN: // CHEMIN_JARDIN
         value.move< std::string > (std::move (that.value));
         break;
 
@@ -803,6 +811,7 @@ switch (yykind)
 
       case symbol_kind::S_ID: // ID
       case symbol_kind::S_COULEUR: // COULEUR
+      case symbol_kind::S_CHEMIN_JARDIN: // CHEMIN_JARDIN
         value.template destroy< std::string > ();
         break;
 
@@ -908,6 +917,7 @@ switch (yykind)
                    || (token::NL <= tok && tok <= token::DIFFERENT)
                    || (token::FOIS <= tok && tok <= token::COMMENT)
                    || (token::TANTQUE <= tok && tok <= token::MODIF_COULEUR)
+                   || (token::TORTUES <= tok && tok <= token::JARDIN)
                    || tok == 45
                    || tok == 43
                    || tok == 42
@@ -946,7 +956,8 @@ switch (yykind)
 #endif
       {
         YY_ASSERT (tok == token::ID
-                   || tok == token::COULEUR);
+                   || tok == token::COULEUR
+                   || tok == token::CHEMIN_JARDIN);
       }
     };
 
@@ -1437,6 +1448,51 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_TORTUES (location_type l)
+      {
+        return symbol_type (token::TORTUES, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_TORTUES (const location_type& l)
+      {
+        return symbol_type (token::TORTUES, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_JARDIN (location_type l)
+      {
+        return symbol_type (token::JARDIN, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_JARDIN (const location_type& l)
+      {
+        return symbol_type (token::JARDIN, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_CHEMIN_JARDIN (std::string v, location_type l)
+      {
+        return symbol_type (token::CHEMIN_JARDIN, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_CHEMIN_JARDIN (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::CHEMIN_JARDIN, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_NEG (location_type l)
       {
         return symbol_type (token::NEG, std::move (l));
@@ -1753,7 +1809,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 196,     ///< Last index in yytable_.
+      yylast_ = 229,     ///< Last index in yytable_.
       yynnts_ = 12,  ///< Number of nonterminal symbols.
       yyfinal_ = 5 ///< Termination state number.
     };
@@ -1767,7 +1823,7 @@ switch (yykind)
 
 
 } // yy
-#line 1771 "parser.hh"
+#line 1827 "parser.hh"
 
 
 

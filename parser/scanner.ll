@@ -88,6 +88,14 @@ using token = yy::Parser::token;
     return token::TOURNE;
 }
 
+"tortues" {
+    return token::TORTUES;
+}
+
+"jardin" {
+    return token::JARDIN;
+}
+
 "couleur" {
     return token::MODIF_COULEUR;
 }
@@ -105,6 +113,11 @@ using token = yy::Parser::token;
 #[AaBbCcDdEeFf0-9]{6} {
     yylval->build<std::string>(yytext);
     return token::COULEUR;
+}
+
+[A-Za-z/0-9\.]*\.txt {
+    yylval->build<std::string>(yytext);
+    return token::CHEMIN_JARDIN;   
 }
 
 "devant" {

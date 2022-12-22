@@ -42,4 +42,8 @@ void Action::parcourir(Driver & driver) const {
         driver.tourner(_p1,_p2);
     else if(_type == "couleur")
         driver.modifier_couleur(_p1, _p2, _p3);
+    else if(_type == "tortues")
+        driver.ajouter_tortues(_p1);
+    else if(_type == "jardin")
+        driver.chargerJardin(_p3);
 }

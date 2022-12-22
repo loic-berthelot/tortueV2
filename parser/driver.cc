@@ -158,3 +158,14 @@ void Driver::modifier_couleur(int n, int mode, std::string couleur){
         }
     }
 }
+
+void Driver::ajouter_tortues(int n){
+    for(int i=0;i<n;i++){
+        getJardin()->ajouterTortue();
+    }
+}
+
+void Driver::chargerJardin(std::string nom){
+    getJardin()->nettoyerJardin();
+    getJardin()->construction(nom.c_str());
+}

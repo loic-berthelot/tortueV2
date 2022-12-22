@@ -80,6 +80,7 @@ private:
     int _p2;
     std::string _p3;
 public:
+    Action(std::string const & t, int p1) : _type(t), _p1(p1){}
     Action(std::string const & t, int p1, int p2) : _type(t), _p1(p1), _p2(p2){}
     Action(std::string const & t, int p1, int p2, std::string const & p3): _type(t), _p1(p1), _p2(p2), _p3(p3) {}
     void parcourir(Driver & driver) const override;
