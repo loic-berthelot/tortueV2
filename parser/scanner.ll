@@ -102,7 +102,7 @@ using token = yy::Parser::token;
     return token::MODE_COULEUR;
 }
 
-"#[AaBbCcDdEeFf1-9]{6}" {
+#[AaBbCcDdEeFf0-9]{6} {
     yylval->build<std::string>(yytext);
     return token::COULEUR;
 }
@@ -154,5 +154,9 @@ using token = yy::Parser::token;
 
 "fois" return token::FOIS;
 
+[a-z][a-zA-Z0-9]*    {
+    yylval->build<std::string>(YYText());
+    return token::ID;
+}
 
 %%

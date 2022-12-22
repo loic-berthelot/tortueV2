@@ -26,12 +26,15 @@
 %code{
     #include <iostream>
     #include <string>
-    
+    #include <map>
+
     #include "scanner.hh"
     #include "driver.hh"
 
     #undef  yylex
     #define yylex scanner.yylex
+
+    std::map<std::string, InstPtr> fonctions;
 }
 
 %token                  AVANCE
@@ -41,8 +44,6 @@
 %token <int>            SENS
 %token <int>            IdTortue
 %token <int>            DIRECTION
-%token <int>            MODE_COULEUR
-%token <std::string>    COULEUR
 
 %token                  NL
 %token                  END
@@ -54,13 +55,16 @@
 %token                  EGAL
 %token                  DIFFERENT
 %token <float>          NUMBER
-%token <std::string>    IDENT
+%token <std::string>    ID
 %token                  FOIS
 %token                  COMMENT
 %token <int>            CONDITION
 %token                  TANTQUE
 %token                  REPETE
 %token                  MODIF_COULEUR
+%token <std::string>    COULEUR
+%token <int>            MODE_COULEUR
+
 
 %type                   comment
 %type                   fois
@@ -77,12 +81,14 @@
 
 %%
 
-// on devrait mettre toutes les instructions dans un arbre et les exécuter seulement lorsque l'utilisateur met fin
 programme:
     FONCTION MAIN DOUBLEPOINT NL instruction END FONCTION NL{
         $5->parcourir(driver);
         YYACCEPT;
     }
+    | FONCTION ID DOUBLEPOINT NL instruction END FONCTION NL {
+        fonctions[$2]= $5;
+    } programme
 
 instruction :
     instruction comment NL
@@ -115,6 +121,9 @@ instruction :
     | action
     | instruction instruction {
         $$ = std::make_shared<Bloc>($1, $2);
+    }
+    | ID {
+        $$ = fonctions[$1];
     }
 
 

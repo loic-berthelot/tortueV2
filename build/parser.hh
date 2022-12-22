@@ -421,15 +421,15 @@ namespace yy {
       // SENS
       // IdTortue
       // DIRECTION
-      // MODE_COULEUR
       // CONDITION
+      // MODE_COULEUR
       // mode
       // expression
       // selection
       char dummy5[sizeof (int)];
 
+      // ID
       // COULEUR
-      // IDENT
       char dummy6[sizeof (std::string)];
     };
 
@@ -489,25 +489,25 @@ namespace yy {
     SENS = 262,                    // SENS
     IdTortue = 263,                // IdTortue
     DIRECTION = 264,               // DIRECTION
-    MODE_COULEUR = 265,            // MODE_COULEUR
-    COULEUR = 266,                 // COULEUR
-    NL = 267,                      // NL
-    END = 268,                     // END
-    SI = 269,                      // SI
-    SINON = 270,                   // SINON
-    DOUBLEPOINT = 271,             // DOUBLEPOINT
-    FONCTION = 272,                // FONCTION
-    MAIN = 273,                    // MAIN
-    EGAL = 274,                    // EGAL
-    DIFFERENT = 275,               // DIFFERENT
-    NUMBER = 276,                  // NUMBER
-    IDENT = 277,                   // IDENT
-    FOIS = 278,                    // FOIS
-    COMMENT = 279,                 // COMMENT
-    CONDITION = 280,               // CONDITION
-    TANTQUE = 281,                 // TANTQUE
-    REPETE = 282,                  // REPETE
-    MODIF_COULEUR = 283,           // MODIF_COULEUR
+    NL = 265,                      // NL
+    END = 266,                     // END
+    SI = 267,                      // SI
+    SINON = 268,                   // SINON
+    DOUBLEPOINT = 269,             // DOUBLEPOINT
+    FONCTION = 270,                // FONCTION
+    MAIN = 271,                    // MAIN
+    EGAL = 272,                    // EGAL
+    DIFFERENT = 273,               // DIFFERENT
+    NUMBER = 274,                  // NUMBER
+    ID = 275,                      // ID
+    FOIS = 276,                    // FOIS
+    COMMENT = 277,                 // COMMENT
+    CONDITION = 278,               // CONDITION
+    TANTQUE = 279,                 // TANTQUE
+    REPETE = 280,                  // REPETE
+    MODIF_COULEUR = 281,           // MODIF_COULEUR
+    COULEUR = 282,                 // COULEUR
+    MODE_COULEUR = 283,            // MODE_COULEUR
     NEG = 284                      // NEG
       };
       /// Backward compatibility alias (Bison 3.6).
@@ -537,25 +537,25 @@ namespace yy {
         S_SENS = 7,                              // SENS
         S_IdTortue = 8,                          // IdTortue
         S_DIRECTION = 9,                         // DIRECTION
-        S_MODE_COULEUR = 10,                     // MODE_COULEUR
-        S_COULEUR = 11,                          // COULEUR
-        S_NL = 12,                               // NL
-        S_END = 13,                              // END
-        S_SI = 14,                               // SI
-        S_SINON = 15,                            // SINON
-        S_DOUBLEPOINT = 16,                      // DOUBLEPOINT
-        S_FONCTION = 17,                         // FONCTION
-        S_MAIN = 18,                             // MAIN
-        S_EGAL = 19,                             // EGAL
-        S_DIFFERENT = 20,                        // DIFFERENT
-        S_NUMBER = 21,                           // NUMBER
-        S_IDENT = 22,                            // IDENT
-        S_FOIS = 23,                             // FOIS
-        S_COMMENT = 24,                          // COMMENT
-        S_CONDITION = 25,                        // CONDITION
-        S_TANTQUE = 26,                          // TANTQUE
-        S_REPETE = 27,                           // REPETE
-        S_MODIF_COULEUR = 28,                    // MODIF_COULEUR
+        S_NL = 10,                               // NL
+        S_END = 11,                              // END
+        S_SI = 12,                               // SI
+        S_SINON = 13,                            // SINON
+        S_DOUBLEPOINT = 14,                      // DOUBLEPOINT
+        S_FONCTION = 15,                         // FONCTION
+        S_MAIN = 16,                             // MAIN
+        S_EGAL = 17,                             // EGAL
+        S_DIFFERENT = 18,                        // DIFFERENT
+        S_NUMBER = 19,                           // NUMBER
+        S_ID = 20,                               // ID
+        S_FOIS = 21,                             // FOIS
+        S_COMMENT = 22,                          // COMMENT
+        S_CONDITION = 23,                        // CONDITION
+        S_TANTQUE = 24,                          // TANTQUE
+        S_REPETE = 25,                           // REPETE
+        S_MODIF_COULEUR = 26,                    // MODIF_COULEUR
+        S_COULEUR = 27,                          // COULEUR
+        S_MODE_COULEUR = 28,                     // MODE_COULEUR
         S_29_ = 29,                              // '-'
         S_30_ = 30,                              // '+'
         S_31_ = 31,                              // '*'
@@ -565,15 +565,16 @@ namespace yy {
         S_35_ = 35,                              // ')'
         S_YYACCEPT = 36,                         // $accept
         S_programme = 37,                        // programme
-        S_instruction = 38,                      // instruction
-        S_action = 39,                           // action
-        S_verification = 40,                     // verification
-        S_mode = 41,                             // mode
-        S_expression = 42,                       // expression
-        S_comment = 43,                          // comment
-        S_fois = 44,                             // fois
-        S_selection = 45,                        // selection
-        S_operation = 46                         // operation
+        S_38_1 = 38,                             // $@1
+        S_instruction = 39,                      // instruction
+        S_action = 40,                           // action
+        S_verification = 41,                     // verification
+        S_mode = 42,                             // mode
+        S_expression = 43,                       // expression
+        S_comment = 44,                          // comment
+        S_fois = 45,                             // fois
+        S_selection = 46,                        // selection
+        S_operation = 47                         // operation
       };
     };
 
@@ -630,16 +631,16 @@ namespace yy {
       case symbol_kind::S_SENS: // SENS
       case symbol_kind::S_IdTortue: // IdTortue
       case symbol_kind::S_DIRECTION: // DIRECTION
-      case symbol_kind::S_MODE_COULEUR: // MODE_COULEUR
       case symbol_kind::S_CONDITION: // CONDITION
+      case symbol_kind::S_MODE_COULEUR: // MODE_COULEUR
       case symbol_kind::S_mode: // mode
       case symbol_kind::S_expression: // expression
       case symbol_kind::S_selection: // selection
         value.move< int > (std::move (that.value));
         break;
 
+      case symbol_kind::S_ID: // ID
       case symbol_kind::S_COULEUR: // COULEUR
-      case symbol_kind::S_IDENT: // IDENT
         value.move< std::string > (std::move (that.value));
         break;
 
@@ -792,16 +793,16 @@ switch (yykind)
       case symbol_kind::S_SENS: // SENS
       case symbol_kind::S_IdTortue: // IdTortue
       case symbol_kind::S_DIRECTION: // DIRECTION
-      case symbol_kind::S_MODE_COULEUR: // MODE_COULEUR
       case symbol_kind::S_CONDITION: // CONDITION
+      case symbol_kind::S_MODE_COULEUR: // MODE_COULEUR
       case symbol_kind::S_mode: // mode
       case symbol_kind::S_expression: // expression
       case symbol_kind::S_selection: // selection
         value.template destroy< int > ();
         break;
 
+      case symbol_kind::S_ID: // ID
       case symbol_kind::S_COULEUR: // COULEUR
-      case symbol_kind::S_IDENT: // IDENT
         value.template destroy< std::string > ();
         break;
 
@@ -932,8 +933,9 @@ switch (yykind)
         : super_type(token_type (tok), v, l)
 #endif
       {
-        YY_ASSERT ((token::SENS <= tok && tok <= token::MODE_COULEUR)
-                   || tok == token::CONDITION);
+        YY_ASSERT ((token::SENS <= tok && tok <= token::DIRECTION)
+                   || tok == token::CONDITION
+                   || tok == token::MODE_COULEUR);
       }
 #if 201103L <= YY_CPLUSPLUS
       symbol_type (int tok, std::string v, location_type l)
@@ -943,8 +945,8 @@ switch (yykind)
         : super_type(token_type (tok), v, l)
 #endif
       {
-        YY_ASSERT (tok == token::COULEUR
-                   || tok == token::IDENT);
+        YY_ASSERT (tok == token::ID
+                   || tok == token::COULEUR);
       }
     };
 
@@ -1150,36 +1152,6 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_MODE_COULEUR (int v, location_type l)
-      {
-        return symbol_type (token::MODE_COULEUR, std::move (v), std::move (l));
-      }
-#else
-      static
-      symbol_type
-      make_MODE_COULEUR (const int& v, const location_type& l)
-      {
-        return symbol_type (token::MODE_COULEUR, v, l);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
-      make_COULEUR (std::string v, location_type l)
-      {
-        return symbol_type (token::COULEUR, std::move (v), std::move (l));
-      }
-#else
-      static
-      symbol_type
-      make_COULEUR (const std::string& v, const location_type& l)
-      {
-        return symbol_type (token::COULEUR, v, l);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
       make_NL (location_type l)
       {
         return symbol_type (token::NL, std::move (l));
@@ -1330,16 +1302,16 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_IDENT (std::string v, location_type l)
+      make_ID (std::string v, location_type l)
       {
-        return symbol_type (token::IDENT, std::move (v), std::move (l));
+        return symbol_type (token::ID, std::move (v), std::move (l));
       }
 #else
       static
       symbol_type
-      make_IDENT (const std::string& v, const location_type& l)
+      make_ID (const std::string& v, const location_type& l)
       {
-        return symbol_type (token::IDENT, v, l);
+        return symbol_type (token::ID, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1435,6 +1407,36 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_COULEUR (std::string v, location_type l)
+      {
+        return symbol_type (token::COULEUR, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_COULEUR (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::COULEUR, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_MODE_COULEUR (int v, location_type l)
+      {
+        return symbol_type (token::MODE_COULEUR, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_MODE_COULEUR (const int& v, const location_type& l)
+      {
+        return symbol_type (token::MODE_COULEUR, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_NEG (location_type l)
       {
         return symbol_type (token::NEG, std::move (l));
@@ -1491,7 +1493,7 @@ switch (yykind)
     // Tables.
     // YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
     // STATE-NUM.
-    static const signed char yypact_[];
+    static const short yypact_[];
 
     // YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
     // Performed when YYTABLE does not specify something else to do.  Zero
@@ -1751,9 +1753,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 132,     ///< Last index in yytable_.
-      yynnts_ = 11,  ///< Number of nonterminal symbols.
-      yyfinal_ = 4 ///< Termination state number.
+      yylast_ = 196,     ///< Last index in yytable_.
+      yynnts_ = 12,  ///< Number of nonterminal symbols.
+      yyfinal_ = 5 ///< Termination state number.
     };
 
 
@@ -1765,7 +1767,7 @@ switch (yykind)
 
 
 } // yy
-#line 1769 "parser.hh"
+#line 1771 "parser.hh"
 
 
 
