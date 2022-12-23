@@ -71,6 +71,10 @@ using token = yy::Parser::token;
     return token::MODE_COULEUR;
 }
 
+"pas de" {
+    return token::PAS_DE;
+}
+
 "motif" {
     yylval->build<int>(1);
     return token::MODE_COULEUR;

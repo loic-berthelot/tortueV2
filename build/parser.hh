@@ -512,7 +512,8 @@ namespace yy {
     JARDIN = 285,                  // JARDIN
     CHEMIN_JARDIN = 286,           // CHEMIN_JARDIN
     END_OF_FILE = 287,             // END_OF_FILE
-    NEG = 288                      // NEG
+    PAS_DE = 288,                  // PAS_DE
+    NEG = 289                      // NEG
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -529,7 +530,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 40, ///< Number of tokens.
+        YYNTOKENS = 41, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -564,26 +565,28 @@ namespace yy {
         S_JARDIN = 30,                           // JARDIN
         S_CHEMIN_JARDIN = 31,                    // CHEMIN_JARDIN
         S_END_OF_FILE = 32,                      // END_OF_FILE
-        S_33_ = 33,                              // '-'
-        S_34_ = 34,                              // '+'
-        S_35_ = 35,                              // '*'
-        S_36_ = 36,                              // '/'
-        S_NEG = 37,                              // NEG
-        S_38_ = 38,                              // '('
-        S_39_ = 39,                              // ')'
-        S_YYACCEPT = 40,                         // $accept
-        S_programme = 41,                        // programme
-        S_42_1 = 42,                             // $@1
-        S_instruction = 43,                      // instruction
-        S_parametres = 44,                       // parametres
-        S_action = 45,                           // action
-        S_verification = 46,                     // verification
-        S_mode = 47,                             // mode
-        S_expression = 48,                       // expression
-        S_comment = 49,                          // comment
-        S_fois = 50,                             // fois
-        S_selection = 51,                        // selection
-        S_operation = 52                         // operation
+        S_PAS_DE = 33,                           // PAS_DE
+        S_34_ = 34,                              // '-'
+        S_35_ = 35,                              // '+'
+        S_36_ = 36,                              // '*'
+        S_37_ = 37,                              // '/'
+        S_NEG = 38,                              // NEG
+        S_39_ = 39,                              // '('
+        S_40_ = 40,                              // ')'
+        S_YYACCEPT = 41,                         // $accept
+        S_programme = 42,                        // programme
+        S_43_1 = 43,                             // $@1
+        S_44_2 = 44,                             // $@2
+        S_instruction = 45,                      // instruction
+        S_parametres = 46,                       // parametres
+        S_action = 47,                           // action
+        S_verification = 48,                     // verification
+        S_mode = 49,                             // mode
+        S_expression = 50,                       // expression
+        S_comment = 51,                          // comment
+        S_fois = 52,                             // fois
+        S_selection = 53,                        // selection
+        S_operation = 54                         // operation
       };
     };
 
@@ -944,7 +947,7 @@ switch (yykind)
                    || (token::FOIS <= tok && tok <= token::COMMENT)
                    || (token::TANTQUE <= tok && tok <= token::MODIF_COULEUR)
                    || (token::TORTUES <= tok && tok <= token::JARDIN)
-                   || tok == token::END_OF_FILE
+                   || (token::END_OF_FILE <= tok && tok <= token::PAS_DE)
                    || tok == 45
                    || tok == 43
                    || tok == 42
@@ -1537,6 +1540,21 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_PAS_DE (location_type l)
+      {
+        return symbol_type (token::PAS_DE, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_PAS_DE (const location_type& l)
+      {
+        return symbol_type (token::PAS_DE, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_NEG (location_type l)
       {
         return symbol_type (token::NEG, std::move (l));
@@ -1593,7 +1611,7 @@ switch (yykind)
     // Tables.
     // YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
     // STATE-NUM.
-    static const short yypact_[];
+    static const signed char yypact_[];
 
     // YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
     // Performed when YYTABLE does not specify something else to do.  Zero
@@ -1853,9 +1871,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 232,     ///< Last index in yytable_.
-      yynnts_ = 13,  ///< Number of nonterminal symbols.
-      yyfinal_ = 5 ///< Termination state number.
+      yylast_ = 134,     ///< Last index in yytable_.
+      yynnts_ = 14,  ///< Number of nonterminal symbols.
+      yyfinal_ = 7 ///< Termination state number.
     };
 
 
@@ -1867,7 +1885,7 @@ switch (yykind)
 
 
 } // yy
-#line 1871 "parser.hh"
+#line 1889 "parser.hh"
 
 
 

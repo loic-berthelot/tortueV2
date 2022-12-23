@@ -32,7 +32,7 @@ public:
 
     float obtenirOrientationTortue(int n);
  
-    void tourner(int n, int s);
+    void tourner(int n, int s, int rep);
     
     bool verif_mur(int n, int pos);
     bool mur_pos(int n, int pos);

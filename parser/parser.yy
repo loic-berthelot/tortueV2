@@ -61,6 +61,7 @@
 %token                  JARDIN
 %token <std::string>    CHEMIN_JARDIN
 %token                  END_OF_FILE
+%token                  PAS_DE
 
 %type <std::vector<double>> parametres
 %type                   comment
@@ -79,8 +80,10 @@
 %%
 
 programme:
-    FONCTION ID DOUBLEPOINT NL instruction END FONCTION NL {
-        fonctions[$2]= $5;
+    FONCTION ID DOUBLEPOINT comment NL instruction END FONCTION comment NL {
+        fonctions[$2]= $6;
+    } programme
+    | comment NL {
     } programme
     | END_OF_FILE {
         if (! finpgrm && fonctions["main"]) fonctions["main"]->parcourir(driver);
@@ -96,34 +99,34 @@ instruction :
     | comment NL {
         $$ = nullptr;
     }
-    | SI verification NL instruction SINON NL instruction END SI {
+    | SI verification comment NL instruction SINON DOUBLEPOINT comment NL instruction END SI {
         auto res = std::make_shared<Si>($2);
-        res->ajouterFils($4);
-        res->ajouterFils($7);
+        res->ajouterFils($5);
+        res->ajouterFils($10);
         $$ = res;
     }
-    | SI verification NL instruction END SI{
+    | SI verification comment NL instruction END SI{
         auto res = std::make_shared<Si>($2);
-        res->ajouterFils($4);
-        $$ = res;
-    }
-    | TANTQUE verification NL instruction END TANTQUE{
-        auto res = std::make_shared<TantQue>($2);
-        res->ajouterFils($4);
-        $$ = res;
-    }
-    | REPETE expression DOUBLEPOINT NL instruction END REPETE{
-        auto res = std::make_shared<Repete>($2);
         res->ajouterFils($5);
         $$ = res;
     }
-    | SI verification NL instruction END SI{
-        auto res = std::make_shared<Si>($2);
-        res->ajouterFils($4);
+    | TANTQUE verification comment NL instruction END TANTQUE{
+        auto res = std::make_shared<TantQue>($2);
+        res->ajouterFils($5);
         $$ = res;
     }
-    | instruction instruction {
-        $$ = std::make_shared<Bloc>($1, $2);
+    | REPETE expression DOUBLEPOINT comment NL instruction END REPETE{
+        auto res = std::make_shared<Repete>($2);
+        res->ajouterFils($6);
+        $$ = res;
+    }
+    | SI verification comment NL instruction END SI{
+        auto res = std::make_shared<Si>($2);
+        res->ajouterFils($5);
+        $$ = res;
+    }
+    | instruction NL instruction {
+        $$ = std::make_shared<Bloc>($1, $3);
     }
     | ID parametres {
         $$ = std::make_shared<Fonction> ($1, $2);
@@ -151,13 +154,13 @@ action :
     | SAUTE expression selection {        
         $$ = std::make_shared<Action>("saute", $2, $3);
     }
-    | TOURNE SENS selection {
-        $$ = std::make_shared<Action>("tourne", $2, $3);
+    | TOURNE SENS expression selection {
+        $$ = std::make_shared<Action>("tourne", $2, $4, $3);
     }
     | MODIF_COULEUR mode COULEUR selection {
         $$ = std::make_shared<Action>("couleur", $4, $2, $3);
     }
-    | TORTUES expression NL{
+    | TORTUES operation NL{
         $$ = std::make_shared<Action>("tortues", $2);
     }
     | JARDIN CHEMIN_JARDIN{
@@ -168,6 +171,10 @@ verification:
     CONDITION SENS selection DOUBLEPOINT{
         $$ = std::make_shared<Verification>($1, $2, $3);
     }
+    | PAS_DE CONDITION SENS selection DOUBLEPOINT{
+        $$ = std::make_shared<Verification>(($2+1)%2, $3, $4);
+    }
+
 
 mode:
     MODE_COULEUR {

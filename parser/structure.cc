@@ -46,7 +46,7 @@ void Action::parcourir(Driver & driver) const {
     else if (_type == "saute") 
         driver.sauter(_num, (int)_expptr->calculer(driver.getContexte()));
     else if (_type == "tourne") 
-        driver.tourner(_num2, _num);
+        driver.tourner(_num2, _num, (int)_expptr->calculer(driver.getContexte()));
     else if(_type == "couleur")
         driver.modifier_couleur(_num, _num2, _str);
     else if(_type == "tortues")
