@@ -216,7 +216,7 @@ namespace yy {
         break;
 
       case symbol_kind::S_parametres: // parametres
-        value.copy< std::vector<double> > (YY_MOVE (that.value));
+        value.copy< std::vector<ExpressionPtr> > (YY_MOVE (that.value));
         break;
 
       default:
@@ -284,7 +284,7 @@ namespace yy {
         break;
 
       case symbol_kind::S_parametres: // parametres
-        value.move< std::vector<double> > (YY_MOVE (s.value));
+        value.move< std::vector<ExpressionPtr> > (YY_MOVE (s.value));
         break;
 
       default:
@@ -420,7 +420,7 @@ namespace yy {
         break;
 
       case symbol_kind::S_parametres: // parametres
-        value.YY_MOVE_OR_COPY< std::vector<double> > (YY_MOVE (that.value));
+        value.YY_MOVE_OR_COPY< std::vector<ExpressionPtr> > (YY_MOVE (that.value));
         break;
 
       default:
@@ -474,7 +474,7 @@ namespace yy {
         break;
 
       case symbol_kind::S_parametres: // parametres
-        value.move< std::vector<double> > (YY_MOVE (that.value));
+        value.move< std::vector<ExpressionPtr> > (YY_MOVE (that.value));
         break;
 
       default:
@@ -528,7 +528,7 @@ namespace yy {
         break;
 
       case symbol_kind::S_parametres: // parametres
-        value.copy< std::vector<double> > (that.value);
+        value.copy< std::vector<ExpressionPtr> > (that.value);
         break;
 
       default:
@@ -581,7 +581,7 @@ namespace yy {
         break;
 
       case symbol_kind::S_parametres: // parametres
-        value.move< std::vector<double> > (that.value);
+        value.move< std::vector<ExpressionPtr> > (that.value);
         break;
 
       default:
@@ -878,7 +878,7 @@ namespace yy {
         break;
 
       case symbol_kind::S_parametres: // parametres
-        yylhs.value.emplace< std::vector<double> > ();
+        yylhs.value.emplace< std::vector<ExpressionPtr> > ();
         break;
 
       default:
@@ -909,325 +909,318 @@ namespace yy {
 #line 910 "parser.cc"
     break;
 
-  case 4: // $@2: %empty
-#line 86 "../parser/parser.yy"
-                 {
-    }
-#line 917 "parser.cc"
-    break;
-
-  case 6: // programme: END_OF_FILE
-#line 88 "../parser/parser.yy"
+  case 5: // programme: END_OF_FILE
+#line 87 "../parser/parser.yy"
                   {
         if (! finpgrm && fonctions["main"]) fonctions["main"]->parcourir(driver);
         finpgrm = true;
         YYACCEPT;
     }
-#line 927 "parser.cc"
+#line 920 "parser.cc"
     break;
 
-  case 7: // instruction: instruction comment NL
-#line 95 "../parser/parser.yy"
+  case 6: // instruction: instruction comment NL
+#line 94 "../parser/parser.yy"
     { yylhs.value.as < InstPtr > () = yystack_[2].value.as < InstPtr > (); }
-#line 933 "parser.cc"
+#line 926 "parser.cc"
     break;
 
-  case 8: // instruction: comment NL instruction
-#line 96 "../parser/parser.yy"
+  case 7: // instruction: comment NL instruction
+#line 95 "../parser/parser.yy"
                              {
         yylhs.value.as < InstPtr > () = yystack_[0].value.as < InstPtr > ();
     }
-#line 941 "parser.cc"
+#line 934 "parser.cc"
     break;
 
-  case 9: // instruction: comment NL
-#line 99 "../parser/parser.yy"
+  case 8: // instruction: comment NL
+#line 98 "../parser/parser.yy"
                  {
         yylhs.value.as < InstPtr > () = nullptr;
     }
-#line 949 "parser.cc"
+#line 942 "parser.cc"
     break;
 
-  case 10: // instruction: SI verification comment NL instruction SINON DOUBLEPOINT comment NL instruction END SI
-#line 102 "../parser/parser.yy"
+  case 9: // instruction: SI verification comment NL instruction SINON DOUBLEPOINT comment NL instruction END SI
+#line 101 "../parser/parser.yy"
                                                                                              {
         auto res = std::make_shared<Si>(yystack_[10].value.as < VerifPtr > ());
         res->ajouterFils(yystack_[7].value.as < InstPtr > ());
         res->ajouterFils(yystack_[2].value.as < InstPtr > ());
         yylhs.value.as < InstPtr > () = res;
     }
-#line 960 "parser.cc"
+#line 953 "parser.cc"
     break;
 
-  case 11: // instruction: SI verification comment NL instruction END SI
-#line 108 "../parser/parser.yy"
+  case 10: // instruction: SI verification comment NL instruction END SI
+#line 107 "../parser/parser.yy"
                                                    {
         auto res = std::make_shared<Si>(yystack_[5].value.as < VerifPtr > ());
         res->ajouterFils(yystack_[2].value.as < InstPtr > ());
         yylhs.value.as < InstPtr > () = res;
     }
-#line 970 "parser.cc"
+#line 963 "parser.cc"
     break;
 
-  case 12: // instruction: TANTQUE verification comment NL instruction END TANTQUE
-#line 113 "../parser/parser.yy"
+  case 11: // instruction: TANTQUE verification comment NL instruction END TANTQUE
+#line 112 "../parser/parser.yy"
                                                              {
         auto res = std::make_shared<TantQue>(yystack_[5].value.as < VerifPtr > ());
         res->ajouterFils(yystack_[2].value.as < InstPtr > ());
         yylhs.value.as < InstPtr > () = res;
     }
-#line 980 "parser.cc"
+#line 973 "parser.cc"
     break;
 
-  case 13: // instruction: REPETE expression DOUBLEPOINT comment NL instruction END REPETE
-#line 118 "../parser/parser.yy"
+  case 12: // instruction: REPETE expression DOUBLEPOINT comment NL instruction END REPETE
+#line 117 "../parser/parser.yy"
                                                                      {
         auto res = std::make_shared<Repete>(yystack_[6].value.as < ExpressionPtr > ());
         res->ajouterFils(yystack_[2].value.as < InstPtr > ());
         yylhs.value.as < InstPtr > () = res;
     }
-#line 990 "parser.cc"
+#line 983 "parser.cc"
     break;
 
-  case 14: // instruction: SI verification comment NL instruction END SI
-#line 123 "../parser/parser.yy"
+  case 13: // instruction: SI verification comment NL instruction END SI
+#line 122 "../parser/parser.yy"
                                                    {
         auto res = std::make_shared<Si>(yystack_[5].value.as < VerifPtr > ());
         res->ajouterFils(yystack_[2].value.as < InstPtr > ());
         yylhs.value.as < InstPtr > () = res;
     }
-#line 1000 "parser.cc"
+#line 993 "parser.cc"
     break;
 
-  case 15: // instruction: instruction NL instruction
-#line 128 "../parser/parser.yy"
-                                 {
-        yylhs.value.as < InstPtr > () = std::make_shared<Bloc>(yystack_[2].value.as < InstPtr > (), yystack_[0].value.as < InstPtr > ());
+  case 14: // instruction: instruction instruction
+#line 127 "../parser/parser.yy"
+                              {
+        yylhs.value.as < InstPtr > () = std::make_shared<Bloc>(yystack_[1].value.as < InstPtr > (), yystack_[0].value.as < InstPtr > ());
     }
-#line 1008 "parser.cc"
+#line 1001 "parser.cc"
     break;
 
-  case 16: // instruction: ID parametres
-#line 131 "../parser/parser.yy"
+  case 15: // instruction: ID parametres
+#line 130 "../parser/parser.yy"
                     {
-        yylhs.value.as < InstPtr > () = std::make_shared<Fonction> (yystack_[1].value.as < std::string > (), yystack_[0].value.as < std::vector<double> > ());
+        yylhs.value.as < InstPtr > () = std::make_shared<Fonction> (yystack_[1].value.as < std::string > (), yystack_[0].value.as < std::vector<ExpressionPtr> > ());
     }
-#line 1016 "parser.cc"
+#line 1009 "parser.cc"
     break;
 
-  case 17: // instruction: action
-#line 134 "../parser/parser.yy"
-      { yylhs.value.as < InstPtr > () = yystack_[0].value.as < InstPtr > (); }
-#line 1022 "parser.cc"
+  case 16: // instruction: action NL
+#line 133 "../parser/parser.yy"
+      { yylhs.value.as < InstPtr > () = yystack_[1].value.as < InstPtr > (); }
+#line 1015 "parser.cc"
     break;
 
-  case 18: // parametres: parametres expression
-#line 137 "../parser/parser.yy"
+  case 17: // parametres: parametres expression
+#line 136 "../parser/parser.yy"
                            {
-        yystack_[1].value.as < std::vector<double> > ().push_back(yystack_[0].value.as < ExpressionPtr > ()->calculer(driver.getContexte()));
-        yylhs.value.as < std::vector<double> > () = yystack_[1].value.as < std::vector<double> > ();
+        yystack_[1].value.as < std::vector<ExpressionPtr> > ().push_back(yystack_[0].value.as < ExpressionPtr > ());
+        yylhs.value.as < std::vector<ExpressionPtr> > () = yystack_[1].value.as < std::vector<ExpressionPtr> > ();
     }
-#line 1031 "parser.cc"
+#line 1024 "parser.cc"
     break;
 
-  case 19: // parametres: %empty
-#line 141 "../parser/parser.yy"
+  case 18: // parametres: %empty
+#line 140 "../parser/parser.yy"
       {
-        std::vector<double> v;
-        yylhs.value.as < std::vector<double> > () = v;
+        std::vector<ExpressionPtr> v;
+        yylhs.value.as < std::vector<ExpressionPtr> > () = v;
     }
-#line 1040 "parser.cc"
+#line 1033 "parser.cc"
     break;
 
-  case 20: // action: AVANCE expression selection
-#line 147 "../parser/parser.yy"
+  case 19: // action: AVANCE expression selection
+#line 146 "../parser/parser.yy"
                                 {
         yylhs.value.as < InstPtr > () = std::make_shared<Action>("avance", yystack_[1].value.as < ExpressionPtr > (), yystack_[0].value.as < int > ());
     }
-#line 1048 "parser.cc"
+#line 1041 "parser.cc"
     break;
 
-  case 21: // action: RECULE expression selection
-#line 150 "../parser/parser.yy"
+  case 20: // action: RECULE expression selection
+#line 149 "../parser/parser.yy"
                                   {
-        ExpressionPtr inverse = std::make_shared<ExpressionBinaire>(std::make_shared<Constante>(0), yystack_[1].value.as < ExpressionPtr > (), OperateurBinaire::moins);
-        yylhs.value.as < InstPtr > () = std::make_shared<Action>("avance", inverse, yystack_[0].value.as < int > ());
+        ExpressionPtr oppose = std::make_shared<ExpressionBinaire>(std::make_shared<Constante>(0), yystack_[1].value.as < ExpressionPtr > (), OperateurBinaire::moins);
+        yylhs.value.as < InstPtr > () = std::make_shared<Action>("avance", oppose, yystack_[0].value.as < int > ());
     }
-#line 1057 "parser.cc"
+#line 1050 "parser.cc"
     break;
 
-  case 22: // action: SAUTE expression selection
-#line 154 "../parser/parser.yy"
+  case 21: // action: SAUTE expression selection
+#line 153 "../parser/parser.yy"
                                  {        
         yylhs.value.as < InstPtr > () = std::make_shared<Action>("saute", yystack_[1].value.as < ExpressionPtr > (), yystack_[0].value.as < int > ());
     }
-#line 1065 "parser.cc"
+#line 1058 "parser.cc"
     break;
 
-  case 23: // action: TOURNE SENS expression selection
-#line 157 "../parser/parser.yy"
+  case 22: // action: TOURNE SENS expression selection
+#line 156 "../parser/parser.yy"
                                        {
         yylhs.value.as < InstPtr > () = std::make_shared<Action>("tourne", yystack_[2].value.as < int > (), yystack_[0].value.as < int > (), yystack_[1].value.as < ExpressionPtr > ());
     }
-#line 1073 "parser.cc"
+#line 1066 "parser.cc"
     break;
 
-  case 24: // action: MODIF_COULEUR mode COULEUR selection
-#line 160 "../parser/parser.yy"
+  case 23: // action: MODIF_COULEUR mode COULEUR selection
+#line 159 "../parser/parser.yy"
                                            {
         yylhs.value.as < InstPtr > () = std::make_shared<Action>("couleur", yystack_[0].value.as < int > (), yystack_[2].value.as < int > (), yystack_[1].value.as < std::string > ());
     }
-#line 1081 "parser.cc"
+#line 1074 "parser.cc"
     break;
 
-  case 25: // action: TORTUES operation NL
-#line 163 "../parser/parser.yy"
+  case 24: // action: TORTUES operation NL
+#line 162 "../parser/parser.yy"
                           {
         yylhs.value.as < InstPtr > () = std::make_shared<Action>("tortues", yystack_[1].value.as < ExpressionPtr > ());
     }
-#line 1089 "parser.cc"
+#line 1082 "parser.cc"
     break;
 
-  case 26: // action: JARDIN CHEMIN_JARDIN
-#line 166 "../parser/parser.yy"
+  case 25: // action: JARDIN CHEMIN_JARDIN
+#line 165 "../parser/parser.yy"
                           {
         yylhs.value.as < InstPtr > () = std::make_shared<Action>("jardin", yystack_[0].value.as < std::string > ());
     }
-#line 1097 "parser.cc"
+#line 1090 "parser.cc"
     break;
 
-  case 27: // verification: CONDITION SENS selection DOUBLEPOINT
-#line 171 "../parser/parser.yy"
+  case 26: // verification: CONDITION SENS selection DOUBLEPOINT
+#line 170 "../parser/parser.yy"
                                         {
         yylhs.value.as < VerifPtr > () = std::make_shared<Verification>(yystack_[3].value.as < int > (), yystack_[2].value.as < int > (), yystack_[1].value.as < int > ());
     }
-#line 1105 "parser.cc"
+#line 1098 "parser.cc"
     break;
 
-  case 28: // verification: PAS_DE CONDITION SENS selection DOUBLEPOINT
-#line 174 "../parser/parser.yy"
+  case 27: // verification: PAS_DE CONDITION SENS selection DOUBLEPOINT
+#line 173 "../parser/parser.yy"
                                                  {
         yylhs.value.as < VerifPtr > () = std::make_shared<Verification>((yystack_[3].value.as < int > ()+1)%2, yystack_[2].value.as < int > (), yystack_[1].value.as < int > ());
     }
-#line 1113 "parser.cc"
+#line 1106 "parser.cc"
     break;
 
-  case 29: // mode: MODE_COULEUR
-#line 180 "../parser/parser.yy"
+  case 28: // mode: MODE_COULEUR
+#line 179 "../parser/parser.yy"
                  {
         yylhs.value.as < int > () = yystack_[0].value.as < int > ();
     }
-#line 1121 "parser.cc"
+#line 1114 "parser.cc"
     break;
 
-  case 30: // mode: %empty
-#line 183 "../parser/parser.yy"
+  case 29: // mode: %empty
+#line 182 "../parser/parser.yy"
       {
         yylhs.value.as < int > () = 0;
     }
-#line 1129 "parser.cc"
+#line 1122 "parser.cc"
     break;
 
-  case 31: // expression: operation fois
-#line 188 "../parser/parser.yy"
+  case 30: // expression: operation fois
+#line 187 "../parser/parser.yy"
                    {
         yylhs.value.as < ExpressionPtr > () = yystack_[1].value.as < ExpressionPtr > ();
     }
-#line 1137 "parser.cc"
+#line 1130 "parser.cc"
     break;
 
-  case 32: // expression: %empty
-#line 191 "../parser/parser.yy"
+  case 31: // expression: %empty
+#line 190 "../parser/parser.yy"
       {
         yylhs.value.as < ExpressionPtr > () = std::make_shared<Constante>(1);
     }
-#line 1145 "parser.cc"
+#line 1138 "parser.cc"
     break;
 
-  case 34: // comment: %empty
-#line 197 "../parser/parser.yy"
+  case 33: // comment: %empty
+#line 196 "../parser/parser.yy"
       {}
-#line 1151 "parser.cc"
+#line 1144 "parser.cc"
     break;
 
-  case 35: // fois: FOIS
-#line 200 "../parser/parser.yy"
+  case 34: // fois: FOIS
+#line 199 "../parser/parser.yy"
          {}
-#line 1157 "parser.cc"
+#line 1150 "parser.cc"
     break;
 
-  case 36: // fois: %empty
-#line 201 "../parser/parser.yy"
+  case 35: // fois: %empty
+#line 200 "../parser/parser.yy"
       {}
-#line 1163 "parser.cc"
+#line 1156 "parser.cc"
     break;
 
-  case 37: // selection: IdTortue
-#line 204 "../parser/parser.yy"
+  case 36: // selection: IdTortue
+#line 203 "../parser/parser.yy"
              {
         yylhs.value.as < int > () = yystack_[0].value.as < int > ();
     }
-#line 1171 "parser.cc"
+#line 1164 "parser.cc"
     break;
 
-  case 38: // selection: %empty
-#line 207 "../parser/parser.yy"
+  case 37: // selection: %empty
+#line 206 "../parser/parser.yy"
       {
         yylhs.value.as < int > () = -1;
     }
-#line 1179 "parser.cc"
+#line 1172 "parser.cc"
     break;
 
-  case 39: // operation: NUMBER
-#line 212 "../parser/parser.yy"
+  case 38: // operation: NUMBER
+#line 211 "../parser/parser.yy"
           {
         yylhs.value.as < ExpressionPtr > () = std::make_shared<Constante>(yystack_[0].value.as < float > ());
     }
-#line 1187 "parser.cc"
+#line 1180 "parser.cc"
     break;
 
-  case 40: // operation: PARAM
-#line 215 "../parser/parser.yy"
+  case 39: // operation: PARAM
+#line 214 "../parser/parser.yy"
             {
         yylhs.value.as < ExpressionPtr > () = std::make_shared<Variable>(yystack_[0].value.as < std::string > ());
     }
-#line 1195 "parser.cc"
+#line 1188 "parser.cc"
     break;
 
-  case 41: // operation: '(' operation ')'
-#line 218 "../parser/parser.yy"
+  case 40: // operation: '(' operation ')'
+#line 217 "../parser/parser.yy"
                         {
         yylhs.value.as < ExpressionPtr > () = yystack_[1].value.as < ExpressionPtr > ();
     }
-#line 1203 "parser.cc"
+#line 1196 "parser.cc"
     break;
 
-  case 42: // operation: operation '+' operation
-#line 221 "../parser/parser.yy"
+  case 41: // operation: operation '+' operation
+#line 220 "../parser/parser.yy"
                               {
         yylhs.value.as < ExpressionPtr > () = std::make_shared<ExpressionBinaire>(yystack_[2].value.as < ExpressionPtr > (), yystack_[0].value.as < ExpressionPtr > (), OperateurBinaire::plus);
     }
-#line 1211 "parser.cc"
+#line 1204 "parser.cc"
     break;
 
-  case 43: // operation: operation '-' operation
-#line 224 "../parser/parser.yy"
+  case 42: // operation: operation '-' operation
+#line 223 "../parser/parser.yy"
                               {
         yylhs.value.as < ExpressionPtr > () = std::make_shared<ExpressionBinaire>(yystack_[2].value.as < ExpressionPtr > (), yystack_[0].value.as < ExpressionPtr > (), OperateurBinaire::moins);
     }
-#line 1219 "parser.cc"
+#line 1212 "parser.cc"
     break;
 
-  case 44: // operation: operation '*' operation
-#line 227 "../parser/parser.yy"
+  case 43: // operation: operation '*' operation
+#line 226 "../parser/parser.yy"
                               {
         yylhs.value.as < ExpressionPtr > () = std::make_shared<ExpressionBinaire>(yystack_[2].value.as < ExpressionPtr > (), yystack_[0].value.as < ExpressionPtr > (), OperateurBinaire::multiplie);
     }
-#line 1227 "parser.cc"
+#line 1220 "parser.cc"
     break;
 
-  case 45: // operation: operation '/' operation
-#line 230 "../parser/parser.yy"
+  case 44: // operation: operation '/' operation
+#line 229 "../parser/parser.yy"
                               {
         if (yystack_[0].value.as < ExpressionPtr > () == 0) {
             std::cerr << "division par 0\n";
@@ -1235,19 +1228,19 @@ namespace yy {
         }
         yylhs.value.as < ExpressionPtr > () = std::make_shared<ExpressionBinaire>(yystack_[2].value.as < ExpressionPtr > (), yystack_[0].value.as < ExpressionPtr > (), OperateurBinaire::divise);
     }
-#line 1239 "parser.cc"
+#line 1232 "parser.cc"
     break;
 
-  case 46: // operation: '-' operation
-#line 237 "../parser/parser.yy"
+  case 45: // operation: '-' operation
+#line 236 "../parser/parser.yy"
                               {
         yylhs.value.as < ExpressionPtr > () = std::make_shared<ExpressionUnaire>(yystack_[0].value.as < ExpressionPtr > (), OperateurUnaire::neg);
     }
-#line 1247 "parser.cc"
+#line 1240 "parser.cc"
     break;
 
 
-#line 1251 "parser.cc"
+#line 1244 "parser.cc"
 
             default:
               break;
@@ -1436,131 +1429,151 @@ namespace yy {
 
 
 
-  const signed char  Parser ::yypact_ninf_ = -43;
+  const signed char  Parser ::yypact_ninf_ = -23;
 
   const signed char  Parser ::yytable_ninf_ = -1;
 
-  const signed char
+  const short
    Parser ::yypact_[] =
   {
-      33,    -8,   -43,   -43,     6,    21,    25,   -43,   -43,    31,
-      33,    43,   -43,    54,    -5,    -5,    -5,    10,    78,   -43,
-      78,    -5,    28,    -5,    37,     4,   -43,    66,   -43,   -43,
-      -5,    -5,    81,   -14,    81,    81,    -5,    75,    64,    31,
-      -5,    31,    88,   -43,    63,    27,   -43,    54,    90,    93,
-      54,   -43,    79,   -43,   -43,   -43,    -5,    -5,    -5,    -5,
-     -43,   -43,   -43,    81,    81,   100,    99,   -43,   101,    31,
-      81,   -43,     2,    31,   -43,     2,   -43,    -1,    -1,   -43,
-     -43,   -43,   102,    81,    54,    54,   107,   -43,   109,   -43,
-     106,    74,    59,    54,   -43,   -43,   110,   111,    98,    83,
-      33,   -43,    31,   -43,   103,   -43,   113,   -43,    54,    86,
-     112,   -43
+      -9,   -19,   -23,   -23,     3,    -1,     2,   -23,    -9,     6,
+     -23,    19,   203,    -5,    -5,    -5,    24,     4,   -23,     4,
+      -5,     7,    -5,     1,    58,    25,    28,   -23,   -23,    -5,
+      -5,    36,   -15,    36,    36,    -5,    38,    23,     6,    -5,
+       6,    34,   -23,    40,    22,   -23,    35,   203,    39,   -23,
+     203,   -23,    93,   -23,   -23,   -23,    -5,    -5,    -5,    -5,
+     -23,   -23,   -23,    36,    36,    61,    54,   -23,    62,     6,
+      36,   -23,     6,   203,   203,   -23,   -21,   -21,   -23,   -23,
+     -23,    60,    36,   203,   203,    68,   -23,    70,   -23,    71,
+      91,   119,   203,   -23,   -23,    76,    77,    78,   147,    -9,
+     -23,     6,   -23,    81,   -23,    96,   -23,   203,   175,    97,
+     -23
   };
 
   const signed char
    Parser ::yydefact_[] =
   {
-      34,     0,    33,     6,     0,     0,     0,     1,     4,    34,
-      34,     0,     5,    34,    32,    32,    32,     0,     0,    19,
-       0,    32,    30,     0,     0,     0,    17,     0,    40,    39,
-       0,     0,    38,    36,    38,    38,    32,     0,     0,    34,
-      16,    34,     0,    29,     0,     0,    26,    34,     0,     0,
-       9,    46,     0,    37,    20,    35,     0,     0,     0,     0,
-      31,    21,    22,    38,    38,     0,     0,    18,     0,    34,
-      38,    25,    15,    34,     7,     8,    41,    43,    42,    44,
-      45,    23,     0,    38,    34,    34,     0,    24,     0,    27,
-       0,     0,     0,    34,     2,    28,     0,     0,     0,     0,
-      34,    11,    34,    12,     0,     3,     0,    13,    34,     0,
-       0,    10
+      33,     0,    32,     5,     0,     0,     0,     1,    33,    33,
+       4,     0,    33,    31,    31,    31,     0,     0,    18,     0,
+      31,    29,     0,     0,    33,     0,     0,    39,    38,     0,
+       0,    37,    35,    37,    37,    31,     0,     0,    33,    15,
+      33,     0,    28,     0,     0,    25,     0,    14,     0,    16,
+       8,    45,     0,    36,    19,    34,     0,     0,     0,     0,
+      30,    20,    21,    37,    37,     0,     0,    17,     0,    33,
+      37,    24,    33,     6,     7,    40,    42,    41,    43,    44,
+      22,     0,    37,    33,    33,     0,    23,     0,    26,     0,
+      33,    33,    33,     2,    27,     0,     0,     0,    33,    33,
+      10,    33,    11,     0,     3,     0,    12,    33,    33,     0,
+       9
   };
 
   const signed char
    Parser ::yypgoto_[] =
   {
-     -43,    -7,   -43,   -43,   -42,   -43,   -43,   114,   -43,    12,
-       0,   -43,   -33,   -12
+     -23,    -6,   -23,    -7,   -23,   -23,    90,   -23,   122,     0,
+     -23,   -22,    -4
   };
 
   const signed char
    Parser ::yydefgoto_[] =
   {
-       0,     4,   100,    10,    25,    40,    26,    39,    44,    32,
-      27,    60,    54,    33
+       0,     4,    99,    47,    39,    25,    38,    43,    31,    26,
+      60,    54,    32
   };
 
   const signed char
    Parser ::yytable_[] =
   {
-       5,    61,    62,    12,    28,    72,     7,    55,    75,    11,
-       5,    45,     6,    47,    29,    47,    48,    36,    51,    52,
-      56,    57,    58,    59,     2,    49,     2,    34,    35,    30,
-      81,    82,     8,    42,    31,    58,    59,    87,    71,    66,
-       9,    68,    91,    92,    77,    78,    79,    80,    63,     1,
-      90,    99,    67,     2,    13,     2,    43,    14,    15,    16,
-      17,    56,    57,    58,    59,     3,   109,    18,    46,    86,
-      47,    98,    49,    88,    19,    49,     2,    50,    20,    21,
-      22,     2,    64,    23,    24,    47,    96,    65,    97,    53,
-      70,    49,    49,   105,    47,   104,     2,    47,   110,    49,
-       5,    37,   106,    69,    74,     2,    73,    83,     2,    49,
-      84,    38,    85,    56,    57,    58,    59,    89,    93,    76,
-      94,    95,   103,   101,   108,   111,   102,     0,   107,     0,
-       0,     0,     0,     0,    41
+       5,     6,    10,     7,    27,    24,    55,     1,     5,    11,
+       8,    61,    62,     2,    28,    58,    59,     9,    44,    56,
+      57,    58,    59,     3,    48,    51,    52,    36,     2,    29,
+      12,    35,    45,    71,    30,    42,    49,    37,    66,    50,
+      68,    80,    81,    74,    53,    64,    65,    48,    86,    69,
+      73,    72,    76,    77,    78,    79,    56,    57,    58,    59,
+      89,    13,    14,    15,    16,    83,    74,    70,    82,    85,
+      46,    17,    87,    84,    48,    88,    90,    91,    18,    92,
+       2,    93,    19,    20,    21,    98,    94,    22,    23,   100,
+      48,    48,   101,   104,    13,    14,    15,    16,    48,     5,
+     108,   105,   102,    95,    17,    96,   106,   107,    48,    40,
+     110,    18,     0,     2,     0,    19,    20,    21,     0,     0,
+      22,    23,    13,    14,    15,    16,     0,    56,    57,    58,
+      59,    97,    17,    75,     0,     0,    33,    34,     0,    18,
+       0,     2,    41,    19,    20,    21,     0,     0,    22,    23,
+      13,    14,    15,    16,     0,     0,     0,    63,     0,   103,
+      17,    67,     0,     0,     0,     0,     0,    18,     0,     2,
+       0,    19,    20,    21,     0,     0,    22,    23,    13,    14,
+      15,    16,     0,     0,     0,     0,     0,   109,    17,     0,
+       0,     0,     0,     0,     0,    18,     0,     2,     0,    19,
+      20,    21,     0,     0,    22,    23,    13,    14,    15,    16,
+       0,     0,     0,     0,     0,     0,    17,     0,     0,     0,
+       0,     0,     0,    18,     0,     2,     0,    19,    20,    21,
+       0,     0,    22,    23
   };
 
   const signed char
    Parser ::yycheck_[] =
   {
-       0,    34,    35,    10,     9,    47,     0,    21,    50,     9,
-      10,    23,    20,    11,    19,    11,    12,     7,    30,    31,
-      34,    35,    36,    37,    22,    25,    22,    15,    16,    34,
-      63,    64,    11,    21,    39,    36,    37,    70,    11,    39,
-      15,    41,    84,    85,    56,    57,    58,    59,    36,    16,
-      83,    93,    40,    22,    11,    22,    28,     3,     4,     5,
-       6,    34,    35,    36,    37,    32,   108,    13,    31,    69,
-      11,    12,    72,    73,    20,    75,    22,    11,    24,    25,
-      26,    22,     7,    29,    30,    11,    12,    23,    14,     8,
-      27,    91,    92,   100,    11,    12,    22,    11,    12,    99,
-     100,    23,   102,    15,    11,    22,    16,     7,    22,   109,
-      11,    33,    11,    34,    35,    36,    37,    15,    11,    40,
-      11,    15,    24,    13,    11,    13,    15,    -1,    25,    -1,
-      -1,    -1,    -1,    -1,    20
+       0,    20,     8,     0,     9,    12,    21,    16,     8,     9,
+      11,    33,    34,    22,    19,    36,    37,    15,    22,    34,
+      35,    36,    37,    32,    24,    29,    30,    23,    22,    34,
+      11,     7,    31,    11,    39,    28,    11,    33,    38,    11,
+      40,    63,    64,    50,     8,     7,    23,    47,    70,    15,
+      11,    16,    56,    57,    58,    59,    34,    35,    36,    37,
+      82,     3,     4,     5,     6,    11,    73,    27,     7,    69,
+      12,    13,    72,    11,    74,    15,    83,    84,    20,    11,
+      22,    11,    24,    25,    26,    92,    15,    29,    30,    13,
+      90,    91,    15,    99,     3,     4,     5,     6,    98,    99,
+     107,   101,    24,    12,    13,    14,    25,    11,   108,    19,
+      13,    20,    -1,    22,    -1,    24,    25,    26,    -1,    -1,
+      29,    30,     3,     4,     5,     6,    -1,    34,    35,    36,
+      37,    12,    13,    40,    -1,    -1,    14,    15,    -1,    20,
+      -1,    22,    20,    24,    25,    26,    -1,    -1,    29,    30,
+       3,     4,     5,     6,    -1,    -1,    -1,    35,    -1,    12,
+      13,    39,    -1,    -1,    -1,    -1,    -1,    20,    -1,    22,
+      -1,    24,    25,    26,    -1,    -1,    29,    30,     3,     4,
+       5,     6,    -1,    -1,    -1,    -1,    -1,    12,    13,    -1,
+      -1,    -1,    -1,    -1,    -1,    20,    -1,    22,    -1,    24,
+      25,    26,    -1,    -1,    29,    30,     3,     4,     5,     6,
+      -1,    -1,    -1,    -1,    -1,    -1,    13,    -1,    -1,    -1,
+      -1,    -1,    -1,    20,    -1,    22,    -1,    24,    25,    26,
+      -1,    -1,    29,    30
   };
 
   const signed char
    Parser ::yystos_[] =
   {
-       0,    16,    22,    32,    42,    51,    20,     0,    11,    15,
-      44,    51,    42,    11,     3,     4,     5,     6,    13,    20,
-      24,    25,    26,    29,    30,    45,    47,    51,     9,    19,
-      34,    39,    50,    54,    50,    50,     7,    23,    33,    48,
-      46,    48,    50,    28,    49,    54,    31,    11,    12,    51,
-      11,    54,    54,     8,    53,    21,    34,    35,    36,    37,
-      52,    53,    53,    50,     7,    23,    51,    50,    51,    15,
-      27,    11,    45,    16,    11,    45,    40,    54,    54,    54,
-      54,    53,    53,     7,    11,    11,    51,    53,    51,    15,
-      53,    45,    45,    11,    11,    15,    12,    14,    12,    45,
-      43,    13,    15,    24,    12,    42,    51,    25,    11,    45,
-      12,    13
+       0,    16,    22,    32,    42,    50,    20,     0,    11,    15,
+      42,    50,    11,     3,     4,     5,     6,    13,    20,    24,
+      25,    26,    29,    30,    44,    46,    50,     9,    19,    34,
+      39,    49,    53,    49,    49,     7,    23,    33,    47,    45,
+      47,    49,    28,    48,    53,    31,    12,    44,    50,    11,
+      11,    53,    53,     8,    52,    21,    34,    35,    36,    37,
+      51,    52,    52,    49,     7,    23,    50,    49,    50,    15,
+      27,    11,    16,    11,    44,    40,    53,    53,    53,    53,
+      52,    52,     7,    11,    11,    50,    52,    50,    15,    52,
+      44,    44,    11,    11,    15,    12,    14,    12,    44,    43,
+      13,    15,    24,    12,    42,    50,    25,    11,    44,    12,
+      13
   };
 
   const signed char
    Parser ::yyr1_[] =
   {
-       0,    41,    43,    42,    44,    42,    42,    45,    45,    45,
-      45,    45,    45,    45,    45,    45,    45,    45,    46,    46,
-      47,    47,    47,    47,    47,    47,    47,    48,    48,    49,
-      49,    50,    50,    51,    51,    52,    52,    53,    53,    54,
-      54,    54,    54,    54,    54,    54,    54
+       0,    41,    43,    42,    42,    42,    44,    44,    44,    44,
+      44,    44,    44,    44,    44,    44,    44,    45,    45,    46,
+      46,    46,    46,    46,    46,    46,    47,    47,    48,    48,
+      49,    49,    50,    50,    51,    51,    52,    52,    53,    53,
+      53,    53,    53,    53,    53,    53
   };
 
   const signed char
    Parser ::yyr2_[] =
   {
-       0,     2,     0,    12,     0,     4,     1,     3,     3,     2,
-      12,     7,     7,     8,     7,     3,     2,     1,     2,     0,
-       3,     3,     3,     4,     4,     3,     2,     4,     5,     1,
-       0,     2,     0,     1,     0,     1,     0,     1,     0,     1,
-       1,     3,     3,     3,     3,     3,     2
+       0,     2,     0,    12,     3,     1,     3,     3,     2,    12,
+       7,     7,     8,     7,     2,     2,     2,     2,     0,     3,
+       3,     3,     4,     4,     3,     2,     4,     5,     1,     0,
+       2,     0,     1,     0,     1,     0,     1,     0,     1,     1,
+       3,     3,     3,     3,     3,     2
   };
 
 
@@ -1576,7 +1589,7 @@ namespace yy {
   "ID", "FOIS", "COMMENT", "CONDITION", "TANTQUE", "REPETE",
   "MODIF_COULEUR", "COULEUR", "MODE_COULEUR", "TORTUES", "JARDIN",
   "CHEMIN_JARDIN", "END_OF_FILE", "PAS_DE", "'-'", "'+'", "'*'", "'/'",
-  "NEG", "'('", "')'", "$accept", "programme", "$@1", "$@2", "instruction",
+  "NEG", "'('", "')'", "$accept", "programme", "$@1", "instruction",
   "parametres", "action", "verification", "mode", "expression", "comment",
   "fois", "selection", "operation", YY_NULLPTR
   };
@@ -1587,11 +1600,11 @@ namespace yy {
   const unsigned char
    Parser ::yyrline_[] =
   {
-       0,    83,    83,    83,    86,    86,    88,    95,    96,    99,
-     102,   108,   113,   118,   123,   128,   131,   134,   137,   141,
-     147,   150,   154,   157,   160,   163,   166,   171,   174,   180,
-     183,   188,   191,   196,   197,   200,   201,   204,   207,   212,
-     215,   218,   221,   224,   227,   230,   237
+       0,    83,    83,    83,    86,    87,    94,    95,    98,   101,
+     107,   112,   117,   122,   127,   130,   133,   136,   140,   146,
+     149,   153,   156,   159,   162,   165,   170,   173,   179,   182,
+     187,   190,   195,   196,   199,   200,   203,   206,   211,   214,
+     217,   220,   223,   226,   229,   236
   };
 
   void
@@ -1672,9 +1685,9 @@ namespace yy {
   }
 
 } // yy
-#line 1676 "parser.cc"
+#line 1689 "parser.cc"
 
-#line 240 "../parser/parser.yy"
+#line 239 "../parser/parser.yy"
 
 
 void yy::Parser::error(const location_type &l, const std::string & err_msg) {

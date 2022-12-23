@@ -63,7 +63,7 @@
 %token                  END_OF_FILE
 %token                  PAS_DE
 
-%type <std::vector<double>> parametres
+%type <std::vector<ExpressionPtr>> parametres
 %type                   comment
 %type                   fois
 %type <ExpressionPtr>   expression
@@ -83,8 +83,7 @@ programme:
     FONCTION ID DOUBLEPOINT comment NL instruction END FONCTION comment NL {
         fonctions[$2]= $6;
     } programme
-    | comment NL {
-    } programme
+    | comment NL programme
     | END_OF_FILE {
         if (! finpgrm && fonctions["main"]) fonctions["main"]->parcourir(driver);
         finpgrm = true;
@@ -125,21 +124,21 @@ instruction :
         res->ajouterFils($5);
         $$ = res;
     }
-    | instruction NL instruction {
-        $$ = std::make_shared<Bloc>($1, $3);
+    | instruction instruction {
+        $$ = std::make_shared<Bloc>($1, $2);
     }
     | ID parametres {
         $$ = std::make_shared<Fonction> ($1, $2);
     }
-    | action
+    | action NL
 
 parametres :
     parametres expression  {
-        $1.push_back($2->calculer(driver.getContexte()));
+        $1.push_back($2);
         $$ = $1;
     }
     | {
-        std::vector<double> v;
+        std::vector<ExpressionPtr> v;
         $$ = v;
     }
 
@@ -148,8 +147,8 @@ action :
         $$ = std::make_shared<Action>("avance", $2, $3);
     }
     | RECULE expression selection {
-        ExpressionPtr inverse = std::make_shared<ExpressionBinaire>(std::make_shared<Constante>(0), $2, OperateurBinaire::moins);
-        $$ = std::make_shared<Action>("avance", inverse, $3);
+        ExpressionPtr oppose = std::make_shared<ExpressionBinaire>(std::make_shared<Constante>(0), $2, OperateurBinaire::moins);
+        $$ = std::make_shared<Action>("avance", oppose, $3);
     }
     | SAUTE expression selection {        
         $$ = std::make_shared<Action>("saute", $2, $3);
