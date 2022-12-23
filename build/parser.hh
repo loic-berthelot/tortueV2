@@ -496,24 +496,23 @@ namespace yy {
     SINON = 269,                   // SINON
     DOUBLEPOINT = 270,             // DOUBLEPOINT
     FONCTION = 271,                // FONCTION
-    MAIN = 272,                    // MAIN
-    EGAL = 273,                    // EGAL
-    DIFFERENT = 274,               // DIFFERENT
-    NUMBER = 275,                  // NUMBER
-    ID = 276,                      // ID
-    FOIS = 277,                    // FOIS
-    COMMENT = 278,                 // COMMENT
-    CONDITION = 279,               // CONDITION
-    TANTQUE = 280,                 // TANTQUE
-    REPETE = 281,                  // REPETE
-    MODIF_COULEUR = 282,           // MODIF_COULEUR
-    COULEUR = 283,                 // COULEUR
-    MODE_COULEUR = 284,            // MODE_COULEUR
-    TORTUES = 285,                 // TORTUES
-    JARDIN = 286,                  // JARDIN
-    CHEMIN_JARDIN = 287,           // CHEMIN_JARDIN
-    END_OF_FILE = 288,             // END_OF_FILE
-    NEG = 289                      // NEG
+    EGAL = 272,                    // EGAL
+    DIFFERENT = 273,               // DIFFERENT
+    NUMBER = 274,                  // NUMBER
+    ID = 275,                      // ID
+    FOIS = 276,                    // FOIS
+    COMMENT = 277,                 // COMMENT
+    CONDITION = 278,               // CONDITION
+    TANTQUE = 279,                 // TANTQUE
+    REPETE = 280,                  // REPETE
+    MODIF_COULEUR = 281,           // MODIF_COULEUR
+    COULEUR = 282,                 // COULEUR
+    MODE_COULEUR = 283,            // MODE_COULEUR
+    TORTUES = 284,                 // TORTUES
+    JARDIN = 285,                  // JARDIN
+    CHEMIN_JARDIN = 286,           // CHEMIN_JARDIN
+    END_OF_FILE = 287,             // END_OF_FILE
+    NEG = 288                      // NEG
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -530,7 +529,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 41, ///< Number of tokens.
+        YYNTOKENS = 40, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -549,43 +548,42 @@ namespace yy {
         S_SINON = 14,                            // SINON
         S_DOUBLEPOINT = 15,                      // DOUBLEPOINT
         S_FONCTION = 16,                         // FONCTION
-        S_MAIN = 17,                             // MAIN
-        S_EGAL = 18,                             // EGAL
-        S_DIFFERENT = 19,                        // DIFFERENT
-        S_NUMBER = 20,                           // NUMBER
-        S_ID = 21,                               // ID
-        S_FOIS = 22,                             // FOIS
-        S_COMMENT = 23,                          // COMMENT
-        S_CONDITION = 24,                        // CONDITION
-        S_TANTQUE = 25,                          // TANTQUE
-        S_REPETE = 26,                           // REPETE
-        S_MODIF_COULEUR = 27,                    // MODIF_COULEUR
-        S_COULEUR = 28,                          // COULEUR
-        S_MODE_COULEUR = 29,                     // MODE_COULEUR
-        S_TORTUES = 30,                          // TORTUES
-        S_JARDIN = 31,                           // JARDIN
-        S_CHEMIN_JARDIN = 32,                    // CHEMIN_JARDIN
-        S_END_OF_FILE = 33,                      // END_OF_FILE
-        S_34_ = 34,                              // '-'
-        S_35_ = 35,                              // '+'
-        S_36_ = 36,                              // '*'
-        S_37_ = 37,                              // '/'
-        S_NEG = 38,                              // NEG
-        S_39_ = 39,                              // '('
-        S_40_ = 40,                              // ')'
-        S_YYACCEPT = 41,                         // $accept
-        S_programme = 42,                        // programme
-        S_43_1 = 43,                             // $@1
-        S_instruction = 44,                      // instruction
-        S_parametres = 45,                       // parametres
-        S_action = 46,                           // action
-        S_verification = 47,                     // verification
-        S_mode = 48,                             // mode
-        S_expression = 49,                       // expression
-        S_comment = 50,                          // comment
-        S_fois = 51,                             // fois
-        S_selection = 52,                        // selection
-        S_operation = 53                         // operation
+        S_EGAL = 17,                             // EGAL
+        S_DIFFERENT = 18,                        // DIFFERENT
+        S_NUMBER = 19,                           // NUMBER
+        S_ID = 20,                               // ID
+        S_FOIS = 21,                             // FOIS
+        S_COMMENT = 22,                          // COMMENT
+        S_CONDITION = 23,                        // CONDITION
+        S_TANTQUE = 24,                          // TANTQUE
+        S_REPETE = 25,                           // REPETE
+        S_MODIF_COULEUR = 26,                    // MODIF_COULEUR
+        S_COULEUR = 27,                          // COULEUR
+        S_MODE_COULEUR = 28,                     // MODE_COULEUR
+        S_TORTUES = 29,                          // TORTUES
+        S_JARDIN = 30,                           // JARDIN
+        S_CHEMIN_JARDIN = 31,                    // CHEMIN_JARDIN
+        S_END_OF_FILE = 32,                      // END_OF_FILE
+        S_33_ = 33,                              // '-'
+        S_34_ = 34,                              // '+'
+        S_35_ = 35,                              // '*'
+        S_36_ = 36,                              // '/'
+        S_NEG = 37,                              // NEG
+        S_38_ = 38,                              // '('
+        S_39_ = 39,                              // ')'
+        S_YYACCEPT = 40,                         // $accept
+        S_programme = 41,                        // programme
+        S_42_1 = 42,                             // $@1
+        S_instruction = 43,                      // instruction
+        S_parametres = 44,                       // parametres
+        S_action = 45,                           // action
+        S_verification = 46,                     // verification
+        S_mode = 47,                             // mode
+        S_expression = 48,                       // expression
+        S_comment = 49,                          // comment
+        S_fois = 50,                             // fois
+        S_selection = 51,                        // selection
+        S_operation = 52                         // operation
       };
     };
 
@@ -1299,21 +1297,6 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_MAIN (location_type l)
-      {
-        return symbol_type (token::MAIN, std::move (l));
-      }
-#else
-      static
-      symbol_type
-      make_MAIN (const location_type& l)
-      {
-        return symbol_type (token::MAIN, l);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
       make_EGAL (location_type l)
       {
         return symbol_type (token::EGAL, std::move (l));
@@ -1870,7 +1853,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 223,     ///< Last index in yytable_.
+      yylast_ = 232,     ///< Last index in yytable_.
       yynnts_ = 13,  ///< Number of nonterminal symbols.
       yyfinal_ = 5 ///< Termination state number.
     };
@@ -1884,7 +1867,7 @@ switch (yykind)
 
 
 } // yy
-#line 1888 "parser.hh"
+#line 1871 "parser.hh"
 
 
 

@@ -123,7 +123,7 @@ $[0-9]+   {
     return token::PARAM;
 }
 
-"\n"          {
+\n*         {
     loc->lines();
     return token::NL;
 }
@@ -137,7 +137,6 @@ $[0-9]+   {
 "=" return '=';
 
 "fois" return token::FOIS;
-
 
 [a-z][a-zA-Z0-9]*    {
     yylval->build<std::string>(YYText());

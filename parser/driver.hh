@@ -28,7 +28,7 @@ public:
     
     void avancerTortue(int n, int x);
     
-    void sauter(int n);
+    void sauter(int n, int x);
 
     float obtenirOrientationTortue(int n);
  

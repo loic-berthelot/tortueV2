@@ -45,7 +45,6 @@
 %token                  SINON
 %token                  DOUBLEPOINT
 %token                  FONCTION
-%token                  MAIN
 %token                  EGAL
 %token                  DIFFERENT
 %token <float>          NUMBER
@@ -84,13 +83,19 @@ programme:
         fonctions[$2]= $5;
     } programme
     | END_OF_FILE {
-        if (! finpgrm) fonctions["main"]->parcourir(driver);
+        if (! finpgrm && fonctions["main"]) fonctions["main"]->parcourir(driver);
         finpgrm = true;
         YYACCEPT;
     }
 
 instruction :
     instruction comment NL
+    | comment NL instruction {
+        $$ = $3;
+    }
+    | comment NL {
+        $$ = nullptr;
+    }
     | SI verification NL instruction SINON NL instruction END SI {
         auto res = std::make_shared<Si>($2);
         res->ajouterFils($4);
@@ -144,7 +149,7 @@ action :
         $$ = std::make_shared<Action>("avance", inverse, $3);
     }
     | SAUTE expression selection {        
-        $$ = std::make_shared<Action>("saute", $3);
+        $$ = std::make_shared<Action>("saute", $2, $3);
     }
     | TOURNE SENS selection {
         $$ = std::make_shared<Action>("tourne", $2, $3);

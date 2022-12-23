@@ -65,11 +65,11 @@ void Driver::avancerTortue(int n, int steps){
     }
 }
 
-void Driver::sauter(int n){
-    avancerTortue(n, 2);
+void Driver::sauter(int n, int x){
+    for (int i = 0; i < x; i++) avancerTortue(n, 2);
 }
 
-float    Driver::obtenirOrientationTortue(int n) { //implémenter le fait de tourner plusieurs fois
+float    Driver::obtenirOrientationTortue(int n) {
     return getJardin()->orientation(n);
 }
 
