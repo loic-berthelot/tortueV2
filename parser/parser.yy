@@ -28,6 +28,7 @@
 
     #undef  yylex
     #define yylex scanner.yylex
+    bool finpgrm = false;
 }
 
 %token                  AVANCE
@@ -79,13 +80,14 @@
 %%
 
 programme:
-    FONCTION MAIN DOUBLEPOINT NL instruction END FONCTION NL{
-        $5->parcourir(driver);
-        YYACCEPT;
-    }
-    | FONCTION ID DOUBLEPOINT NL instruction END FONCTION NL {
+    FONCTION ID DOUBLEPOINT NL instruction END FONCTION NL {
         fonctions[$2]= $5;
     } programme
+    | END_OF_FILE {
+        if (! finpgrm) fonctions["main"]->parcourir(driver);
+        finpgrm = true;
+        YYACCEPT;
+    }
 
 instruction :
     instruction comment NL
@@ -115,13 +117,13 @@ instruction :
         res->ajouterFils($4);
         $$ = res;
     }
-    | action
     | instruction instruction {
         $$ = std::make_shared<Bloc>($1, $2);
     }
     | ID parametres {
         $$ = std::make_shared<Fonction> ($1, $2);
     }
+    | action
 
 parametres :
     parametres expression  {
@@ -142,7 +144,7 @@ action :
         $$ = std::make_shared<Action>("avance", inverse, $3);
     }
     | SAUTE expression selection {        
-        $$ = std::make_shared<Action>("saute", 0, $3);
+        $$ = std::make_shared<Action>("saute", $3);
     }
     | TOURNE SENS selection {
         $$ = std::make_shared<Action>("tourne", $2, $3);
@@ -154,7 +156,7 @@ action :
         $$ = std::make_shared<Action>("tortues", $2);
     }
     | JARDIN CHEMIN_JARDIN{
-        $$ = std::make_shared<Action>("jardin", 0, 0, $2);
+        $$ = std::make_shared<Action>("jardin", $2);
     }
 
 verification:

@@ -40,15 +40,15 @@ void Bloc::parcourir(Driver & driver) const {
 
 void Action::parcourir(Driver & driver) const {
     if (_type == "avance") 
-        driver.avancerTortue(_expptr->calculer(driver.getContexte()),_num);
+        driver.avancerTortue(_num, (int)_expptr->calculer(driver.getContexte()));
     else if (_type == "saute") 
-        driver.sauter(_expptr->calculer(driver.getContexte()));
+        driver.sauter(_num);
     else if (_type == "tourne") 
-        driver.tourner(_expptr->calculer(driver.getContexte()),_num);
+        driver.tourner(_num, (int)_expptr->calculer(driver.getContexte()));
     else if(_type == "couleur")
         driver.modifier_couleur(_num, _num2, _str);
     else if(_type == "tortues")
-        driver.ajouter_tortues(_expptr->calculer(driver.getContexte()));
+        driver.ajouter_tortues((int)_expptr->calculer(driver.getContexte()));
     else if(_type == "jardin")
         driver.chargerJardin(_str);
 }

@@ -66,19 +66,7 @@ void Driver::avancerTortue(int n, int steps){
 }
 
 void Driver::sauter(int n){
-    unsigned int imin, imax;
-    if (n == -1) { // si n vaut -1, on sélectionne toutes les tortues
-        imin = 0;
-        imax = getJardin()->nbTortues()-1; // La fonction nbTortues() a été ajoutée à JardinRendering
-    } else {
-        imin = n;
-        imax = n;
-    }
-    for (unsigned int i = imin; i <= imax; i++) {
-        int a = getJardin()->position(i).x();
-        int b = getJardin()->position(i).y();        
-        getJardin()->changePosition(i,a+2,b);   
-    }
+    avancerTortue(n, 2);
 }
 
 float    Driver::obtenirOrientationTortue(int n) { //implémenter le fait de tourner plusieurs fois

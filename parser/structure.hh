@@ -80,6 +80,7 @@ private:
 public:
     Action(std::string const & t, int n) : _type(t), _num(n){}
     Action(std::string const & t, ExpressionPtr ep) : _type(t), _expptr(ep) {}
+    Action(std::string const & t, std::string const & s) : _type(t), _str(s) {}
     Action(std::string const & t, int n, int n2) : _type(t), _num(n), _num2(n2) {}
     Action(std::string const & t, ExpressionPtr ep, int n) : _type(t), _expptr(ep), _num(n){}
     Action(std::string const & t, int n, int n2, std::string const & s): _type(t), _num(n), _num2(n2), _str(s) {}

@@ -26,41 +26,21 @@ using token = yy::Parser::token;
 %}
 
 
-"fin" {
-    return token::END;
-}
+"fin" return token::END;
 
---.* {
-    return token::COMMENT;
-}
+--.* return token::COMMENT;
 
-"si" {
-    return token::SI;
-}
+"si" return token::SI;
 
-"sinon" {
-    return token::SINON;
-}
+"sinon" return token::SINON;
 
-"repete" {
-    return token::REPETE;
-}
+"repete" return token::REPETE;
 
-"tant que" {
-    return token::TANTQUE;
-}
+"tant que" return token::TANTQUE;
 
-":" {
-    return token::DOUBLEPOINT;
-}
+":" return token::DOUBLEPOINT;
 
-"fonction" {
-    return token::FONCTION;
-}
-
-"main" {
-    return token::MAIN;
-}
+"fonction" return token::FONCTION;
 
 "mur" {
     yylval->build<int>(1);
@@ -72,33 +52,19 @@ using token = yy::Parser::token;
     return token::CONDITION;
 }
 
-"avance" {
-    return token::AVANCE;
-}
+"avance" return token::AVANCE;
 
-"recule" {
-    return token::RECULE;
-}
+"recule" return token::RECULE;
 
-"saute" {
-    return token::SAUTE;
-}
+"saute" return token::SAUTE;
 
-"tourne" {
-    return token::TOURNE;
-}
+"tourne" return token::TOURNE;
 
-"tortues" {
-    return token::TORTUES;
-}
+"tortues" return token::TORTUES;
 
-"jardin" {
-    return token::JARDIN;
-}
+"jardin" return token::JARDIN;
 
-"couleur" {
-    return token::MODIF_COULEUR;
-}
+"couleur" return token::MODIF_COULEUR;
 
 "carapace" {
     yylval->build<int>(0);
@@ -171,6 +137,7 @@ $[0-9]+   {
 "=" return '=';
 
 "fois" return token::FOIS;
+
 
 [a-z][a-zA-Z0-9]*    {
     yylval->build<std::string>(YYText());
