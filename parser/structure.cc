@@ -2,8 +2,6 @@
 #include <iostream>
 
 std::map<std::string, InstPtr> fonctions;
-std::vector<int> parametres;
-int getParametre(int i) { return parametres[i-1]; }
 
 bool Verification::calculer(Driver & driver) const{
     if(_type == 1){
@@ -56,6 +54,6 @@ void Action::parcourir(Driver & driver) const {
 }
 
 void Fonction::parcourir(Driver & driver) const {
-    for (unsigned int i = 0; i < _parametres.size(); i++) driver.setVariable(std::to_string(i+1), _parametres[i]); 
+    for (unsigned int i = 0; i < _parametres.size(); i++) driver.setVariable(std::to_string(i+1), _parametres[i]->calculer(driver.getContexte())); 
     if (fonctions[_name]) fonctions[_name]->parcourir(driver);
 }

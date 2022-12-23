@@ -26,8 +26,6 @@ class Instruction;
 using InstPtr = std::shared_ptr<Instruction>;
 using VerifPtr = std::shared_ptr<Verification>;
 extern std::map<std::string, InstPtr> fonctions;
-extern std::vector<int> parametres;
-int getParametre(int i);
 
 class Instruction{
 protected:
@@ -91,8 +89,8 @@ public:
 class Fonction : public Instruction {
 private:
     std::string _name;
-    std::vector<double> _parametres;
+    std::vector<ExpressionPtr> _parametres;
 public:
-    Fonction(std::string const & n, std::vector<double> const & p) : _name(n), _parametres(p) {}
+    Fonction(std::string const & n, std::vector<ExpressionPtr> const & p) : _name(n), _parametres(p) {}
     void parcourir(Driver & driver) const override;
 };

@@ -430,7 +430,7 @@ namespace yy {
       char dummy6[sizeof (std::string)];
 
       // parametres
-      char dummy7[sizeof (std::vector<double>)];
+      char dummy7[sizeof (std::vector<ExpressionPtr>)];
     };
 
     /// The size of the largest semantic type.
@@ -576,17 +576,16 @@ namespace yy {
         S_YYACCEPT = 41,                         // $accept
         S_programme = 42,                        // programme
         S_43_1 = 43,                             // $@1
-        S_44_2 = 44,                             // $@2
-        S_instruction = 45,                      // instruction
-        S_parametres = 46,                       // parametres
-        S_action = 47,                           // action
-        S_verification = 48,                     // verification
-        S_mode = 49,                             // mode
-        S_expression = 50,                       // expression
-        S_comment = 51,                          // comment
-        S_fois = 52,                             // fois
-        S_selection = 53,                        // selection
-        S_operation = 54                         // operation
+        S_instruction = 44,                      // instruction
+        S_parametres = 45,                       // parametres
+        S_action = 46,                           // action
+        S_verification = 47,                     // verification
+        S_mode = 48,                             // mode
+        S_expression = 49,                       // expression
+        S_comment = 50,                          // comment
+        S_fois = 51,                             // fois
+        S_selection = 52,                        // selection
+        S_operation = 53                         // operation
       };
     };
 
@@ -659,7 +658,7 @@ namespace yy {
         break;
 
       case symbol_kind::S_parametres: // parametres
-        value.move< std::vector<double> > (std::move (that.value));
+        value.move< std::vector<ExpressionPtr> > (std::move (that.value));
         break;
 
       default:
@@ -770,13 +769,13 @@ namespace yy {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::vector<double>&& v, location_type&& l)
+      basic_symbol (typename Base::kind_type t, std::vector<ExpressionPtr>&& v, location_type&& l)
         : Base (t)
         , value (std::move (v))
         , location (std::move (l))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const std::vector<double>& v, const location_type& l)
+      basic_symbol (typename Base::kind_type t, const std::vector<ExpressionPtr>& v, const location_type& l)
         : Base (t)
         , value (v)
         , location (l)
@@ -841,7 +840,7 @@ switch (yykind)
         break;
 
       case symbol_kind::S_parametres: // parametres
-        value.template destroy< std::vector<double> > ();
+        value.template destroy< std::vector<ExpressionPtr> > ();
         break;
 
       default:
@@ -1611,7 +1610,7 @@ switch (yykind)
     // Tables.
     // YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
     // STATE-NUM.
-    static const signed char yypact_[];
+    static const short yypact_[];
 
     // YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
     // Performed when YYTABLE does not specify something else to do.  Zero
@@ -1871,8 +1870,8 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 134,     ///< Last index in yytable_.
-      yynnts_ = 14,  ///< Number of nonterminal symbols.
+      yylast_ = 233,     ///< Last index in yytable_.
+      yynnts_ = 13,  ///< Number of nonterminal symbols.
       yyfinal_ = 7 ///< Termination state number.
     };
 
@@ -1885,7 +1884,7 @@ switch (yykind)
 
 
 } // yy
-#line 1889 "parser.hh"
+#line 1888 "parser.hh"
 
 
 
