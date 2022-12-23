@@ -1,6 +1,10 @@
 #include "structure.hh"
 #include <iostream>
 
+std::map<std::string, InstPtr> fonctions;
+std::vector<int> parametres;
+int getParametre(int i) { return parametres[i-1]; }
+
 bool Verification::calculer(Driver & driver) const{
     if(_type == 1){
         return driver.verif_mur(_id, _direction);
@@ -24,8 +28,9 @@ void TantQue::parcourir(Driver & driver) const {
 }
 
 void Repete::parcourir(Driver & driver) const {
-    for(unsigned int i = 0; i < _nbiterations; i++) 
-        _fils[0]->parcourir(driver);
+    unsigned int imax = (unsigned int)_nbiterations->calculer(driver.getContexte());
+    for(unsigned int i = 0; i < imax; i++) 
+    _fils[0]->parcourir(driver);
 }
 
 void Bloc::parcourir(Driver & driver) const {
@@ -35,15 +40,20 @@ void Bloc::parcourir(Driver & driver) const {
 
 void Action::parcourir(Driver & driver) const {
     if (_type == "avance") 
-        driver.avancerTortue(_p1,_p2);
+        driver.avancerTortue(_expptr->calculer(driver.getContexte()),_num);
     else if (_type == "saute") 
-        driver.sauter(_p1);
+        driver.sauter(_expptr->calculer(driver.getContexte()));
     else if (_type == "tourne") 
-        driver.tourner(_p1,_p2);
+        driver.tourner(_expptr->calculer(driver.getContexte()),_num);
     else if(_type == "couleur")
-        driver.modifier_couleur(_p1, _p2, _p3);
+        driver.modifier_couleur(_num, _num2, _str);
     else if(_type == "tortues")
-        driver.ajouter_tortues(_p1);
+        driver.ajouter_tortues(_expptr->calculer(driver.getContexte()));
     else if(_type == "jardin")
-        driver.chargerJardin(_p3);
+        driver.chargerJardin(_str);
+}
+
+void Fonction::parcourir(Driver & driver) const {
+    for (unsigned int i = 0; i < _parametres.size(); i++) driver.setVariable(std::to_string(i+1), _parametres[i]); 
+    fonctions[_name]->parcourir(driver);
 }

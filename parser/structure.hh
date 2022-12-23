@@ -2,14 +2,14 @@
 #include <string>
 #include <memory>
 #include "driver.hh"
+#include "contexte.hh"
+#include "expressionBinaire.hh"
+#include "expressionUnaire.hh"
+#include "constante.hh"
+#include "variable.hh"
 
+    
 
-/* 
-*   L'arbre contient l'instruction à executer
-*   On fait un parcour par largeur de l'arbre
-*   Si l'instruction est une instruction simple (pas une boucle ou un if) on ajoute un
-*   
-*/
 
 class Verification {
 private:
@@ -25,20 +25,17 @@ class Instruction;
 
 using InstPtr = std::shared_ptr<Instruction>;
 using VerifPtr = std::shared_ptr<Verification>;
+extern std::map<std::string, InstPtr> fonctions;
+extern std::vector<int> parametres;
+int getParametre(int i);
 
-class Instruction{//J'ai changé le nom de "Arbre", que je trouvais trop générique (c'est un peu comme appeler un entier 'nombre' nan ?) bah c'est l'objectif en même temps autant appelé un chat un chat
+class Instruction{
 protected:
     std::vector<InstPtr> _fils;
 public:
     Instruction() {}
     virtual void parcourir(Driver & driver) const=0;
-    void ajouterFils(InstPtr f) { _fils.push_back(f); } //en gros à utiliser pour les structures de contrôles
-
-    //void ajouterBloc() {_fils.push_back(Bloc())};       // à utiliser après la fin de chaque structue
-    //On ne peut pas mettre un bloc (instance) dans un vecteur contenant des pointeurs. Et même en faisant un new, c'est quoi l'intérêt de différencier les blocs des autres types de fils alors que le polymorphisme permet justement de factoriser ?
-   
-    //void ajouterAction(InstPtr f) {_fils.back().ajouterFils(f);} //et à utiliser pour les actions directes
-    //Ca empêche de compiler. De toutes façons, à quoi ça sert ? On a déjà ajouterFils()
+    void ajouterFils(InstPtr f) { _fils.push_back(f); } 
 };
 
 
@@ -52,9 +49,9 @@ public:
 
 class Repete : public Instruction {
 private:
-    unsigned int _nbiterations;
+    ExpressionPtr _nbiterations;
 public:
-    Repete(unsigned int nbi) : _nbiterations(nbi) {}
+    Repete(ExpressionPtr nbi) : _nbiterations(nbi) {}
     void parcourir(Driver & driver) const override;
 };
 
@@ -75,13 +72,25 @@ public:
 
 class Action  : public Instruction {
 private:
-    std::string _type; //l'instruction à executer
-    int _p1;//le premier paramètre de l'instruction
-    int _p2;
-    std::string _p3;
+    std::string _type;
+    int _num;
+    int _num2;
+    std::string _str;
+    ExpressionPtr _expptr;    
 public:
-    Action(std::string const & t, int p1) : _type(t), _p1(p1){}
-    Action(std::string const & t, int p1, int p2) : _type(t), _p1(p1), _p2(p2){}
-    Action(std::string const & t, int p1, int p2, std::string const & p3): _type(t), _p1(p1), _p2(p2), _p3(p3) {}
+    Action(std::string const & t, int n) : _type(t), _num(n){}
+    Action(std::string const & t, ExpressionPtr ep) : _type(t), _expptr(ep) {}
+    Action(std::string const & t, int n, int n2) : _type(t), _num(n), _num2(n2) {}
+    Action(std::string const & t, ExpressionPtr ep, int n) : _type(t), _expptr(ep), _num(n){}
+    Action(std::string const & t, int n, int n2, std::string const & s): _type(t), _num(n), _num2(n2), _str(s) {}
+    void parcourir(Driver & driver) const override;
+};
+
+class Fonction : public Instruction {
+private:
+    std::string _name;
+    std::vector<double> _parametres;
+public:
+    Fonction(std::string const & n, std::vector<double> const & p) : _name(n), _parametres(p) {}
     void parcourir(Driver & driver) const override;
 };

@@ -47,17 +47,12 @@
 // "%code requires" blocks.
 #line 11 "../parser/parser.yy"
 
-    #include "contexte.hh"
-    #include "expressionBinaire.hh"
-    #include "expressionUnaire.hh"
-    #include "constante.hh"
-    #include "variable.hh"
     #include "structure.hh"
 
     class Scanner;
     class Driver;
 
-#line 61 "parser.hh"
+#line 56 "parser.hh"
 
 # include <cassert>
 # include <cstdlib> // std::abort
@@ -191,7 +186,7 @@
 #endif
 
 namespace yy {
-#line 195 "parser.hh"
+#line 190 "parser.hh"
 
 
 
@@ -405,6 +400,7 @@ namespace yy {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
+      // expression
       // operation
       char dummy1[sizeof (ExpressionPtr)];
 
@@ -424,14 +420,17 @@ namespace yy {
       // CONDITION
       // MODE_COULEUR
       // mode
-      // expression
       // selection
       char dummy5[sizeof (int)];
 
+      // PARAM
       // ID
       // COULEUR
       // CHEMIN_JARDIN
       char dummy6[sizeof (std::string)];
+
+      // parametres
+      char dummy7[sizeof (std::vector<double>)];
     };
 
     /// The size of the largest semantic type.
@@ -489,30 +488,32 @@ namespace yy {
     TOURNE = 261,                  // TOURNE
     SENS = 262,                    // SENS
     IdTortue = 263,                // IdTortue
-    DIRECTION = 264,               // DIRECTION
-    NL = 265,                      // NL
-    END = 266,                     // END
-    SI = 267,                      // SI
-    SINON = 268,                   // SINON
-    DOUBLEPOINT = 269,             // DOUBLEPOINT
-    FONCTION = 270,                // FONCTION
-    MAIN = 271,                    // MAIN
-    EGAL = 272,                    // EGAL
-    DIFFERENT = 273,               // DIFFERENT
-    NUMBER = 274,                  // NUMBER
-    ID = 275,                      // ID
-    FOIS = 276,                    // FOIS
-    COMMENT = 277,                 // COMMENT
-    CONDITION = 278,               // CONDITION
-    TANTQUE = 279,                 // TANTQUE
-    REPETE = 280,                  // REPETE
-    MODIF_COULEUR = 281,           // MODIF_COULEUR
-    COULEUR = 282,                 // COULEUR
-    MODE_COULEUR = 283,            // MODE_COULEUR
-    TORTUES = 284,                 // TORTUES
-    JARDIN = 285,                  // JARDIN
-    CHEMIN_JARDIN = 286,           // CHEMIN_JARDIN
-    NEG = 287                      // NEG
+    PARAM = 264,                   // PARAM
+    DIRECTION = 265,               // DIRECTION
+    NL = 266,                      // NL
+    END = 267,                     // END
+    SI = 268,                      // SI
+    SINON = 269,                   // SINON
+    DOUBLEPOINT = 270,             // DOUBLEPOINT
+    FONCTION = 271,                // FONCTION
+    MAIN = 272,                    // MAIN
+    EGAL = 273,                    // EGAL
+    DIFFERENT = 274,               // DIFFERENT
+    NUMBER = 275,                  // NUMBER
+    ID = 276,                      // ID
+    FOIS = 277,                    // FOIS
+    COMMENT = 278,                 // COMMENT
+    CONDITION = 279,               // CONDITION
+    TANTQUE = 280,                 // TANTQUE
+    REPETE = 281,                  // REPETE
+    MODIF_COULEUR = 282,           // MODIF_COULEUR
+    COULEUR = 283,                 // COULEUR
+    MODE_COULEUR = 284,            // MODE_COULEUR
+    TORTUES = 285,                 // TORTUES
+    JARDIN = 286,                  // JARDIN
+    CHEMIN_JARDIN = 287,           // CHEMIN_JARDIN
+    END_OF_FILE = 288,             // END_OF_FILE
+    NEG = 289                      // NEG
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -529,7 +530,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 39, ///< Number of tokens.
+        YYNTOKENS = 41, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -540,48 +541,51 @@ namespace yy {
         S_TOURNE = 6,                            // TOURNE
         S_SENS = 7,                              // SENS
         S_IdTortue = 8,                          // IdTortue
-        S_DIRECTION = 9,                         // DIRECTION
-        S_NL = 10,                               // NL
-        S_END = 11,                              // END
-        S_SI = 12,                               // SI
-        S_SINON = 13,                            // SINON
-        S_DOUBLEPOINT = 14,                      // DOUBLEPOINT
-        S_FONCTION = 15,                         // FONCTION
-        S_MAIN = 16,                             // MAIN
-        S_EGAL = 17,                             // EGAL
-        S_DIFFERENT = 18,                        // DIFFERENT
-        S_NUMBER = 19,                           // NUMBER
-        S_ID = 20,                               // ID
-        S_FOIS = 21,                             // FOIS
-        S_COMMENT = 22,                          // COMMENT
-        S_CONDITION = 23,                        // CONDITION
-        S_TANTQUE = 24,                          // TANTQUE
-        S_REPETE = 25,                           // REPETE
-        S_MODIF_COULEUR = 26,                    // MODIF_COULEUR
-        S_COULEUR = 27,                          // COULEUR
-        S_MODE_COULEUR = 28,                     // MODE_COULEUR
-        S_TORTUES = 29,                          // TORTUES
-        S_JARDIN = 30,                           // JARDIN
-        S_CHEMIN_JARDIN = 31,                    // CHEMIN_JARDIN
-        S_32_ = 32,                              // '-'
-        S_33_ = 33,                              // '+'
-        S_34_ = 34,                              // '*'
-        S_35_ = 35,                              // '/'
-        S_NEG = 36,                              // NEG
-        S_37_ = 37,                              // '('
-        S_38_ = 38,                              // ')'
-        S_YYACCEPT = 39,                         // $accept
-        S_programme = 40,                        // programme
-        S_41_1 = 41,                             // $@1
-        S_instruction = 42,                      // instruction
-        S_action = 43,                           // action
-        S_verification = 44,                     // verification
-        S_mode = 45,                             // mode
-        S_expression = 46,                       // expression
-        S_comment = 47,                          // comment
-        S_fois = 48,                             // fois
-        S_selection = 49,                        // selection
-        S_operation = 50                         // operation
+        S_PARAM = 9,                             // PARAM
+        S_DIRECTION = 10,                        // DIRECTION
+        S_NL = 11,                               // NL
+        S_END = 12,                              // END
+        S_SI = 13,                               // SI
+        S_SINON = 14,                            // SINON
+        S_DOUBLEPOINT = 15,                      // DOUBLEPOINT
+        S_FONCTION = 16,                         // FONCTION
+        S_MAIN = 17,                             // MAIN
+        S_EGAL = 18,                             // EGAL
+        S_DIFFERENT = 19,                        // DIFFERENT
+        S_NUMBER = 20,                           // NUMBER
+        S_ID = 21,                               // ID
+        S_FOIS = 22,                             // FOIS
+        S_COMMENT = 23,                          // COMMENT
+        S_CONDITION = 24,                        // CONDITION
+        S_TANTQUE = 25,                          // TANTQUE
+        S_REPETE = 26,                           // REPETE
+        S_MODIF_COULEUR = 27,                    // MODIF_COULEUR
+        S_COULEUR = 28,                          // COULEUR
+        S_MODE_COULEUR = 29,                     // MODE_COULEUR
+        S_TORTUES = 30,                          // TORTUES
+        S_JARDIN = 31,                           // JARDIN
+        S_CHEMIN_JARDIN = 32,                    // CHEMIN_JARDIN
+        S_END_OF_FILE = 33,                      // END_OF_FILE
+        S_34_ = 34,                              // '-'
+        S_35_ = 35,                              // '+'
+        S_36_ = 36,                              // '*'
+        S_37_ = 37,                              // '/'
+        S_NEG = 38,                              // NEG
+        S_39_ = 39,                              // '('
+        S_40_ = 40,                              // ')'
+        S_YYACCEPT = 41,                         // $accept
+        S_programme = 42,                        // programme
+        S_43_1 = 43,                             // $@1
+        S_instruction = 44,                      // instruction
+        S_parametres = 45,                       // parametres
+        S_action = 46,                           // action
+        S_verification = 47,                     // verification
+        S_mode = 48,                             // mode
+        S_expression = 49,                       // expression
+        S_comment = 50,                          // comment
+        S_fois = 51,                             // fois
+        S_selection = 52,                        // selection
+        S_operation = 53                         // operation
       };
     };
 
@@ -618,6 +622,7 @@ namespace yy {
       {
         switch (this->kind ())
     {
+      case symbol_kind::S_expression: // expression
       case symbol_kind::S_operation: // operation
         value.move< ExpressionPtr > (std::move (that.value));
         break;
@@ -641,15 +646,19 @@ namespace yy {
       case symbol_kind::S_CONDITION: // CONDITION
       case symbol_kind::S_MODE_COULEUR: // MODE_COULEUR
       case symbol_kind::S_mode: // mode
-      case symbol_kind::S_expression: // expression
       case symbol_kind::S_selection: // selection
         value.move< int > (std::move (that.value));
         break;
 
+      case symbol_kind::S_PARAM: // PARAM
       case symbol_kind::S_ID: // ID
       case symbol_kind::S_COULEUR: // COULEUR
       case symbol_kind::S_CHEMIN_JARDIN: // CHEMIN_JARDIN
         value.move< std::string > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_parametres: // parametres
+        value.move< std::vector<double> > (std::move (that.value));
         break;
 
       default:
@@ -759,6 +768,20 @@ namespace yy {
       {}
 #endif
 
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::vector<double>&& v, location_type&& l)
+        : Base (t)
+        , value (std::move (v))
+        , location (std::move (l))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::vector<double>& v, const location_type& l)
+        : Base (t)
+        , value (v)
+        , location (l)
+      {}
+#endif
+
       /// Destroy the symbol.
       ~basic_symbol ()
       {
@@ -781,6 +804,7 @@ namespace yy {
         // Value type destructor.
 switch (yykind)
     {
+      case symbol_kind::S_expression: // expression
       case symbol_kind::S_operation: // operation
         value.template destroy< ExpressionPtr > ();
         break;
@@ -804,15 +828,19 @@ switch (yykind)
       case symbol_kind::S_CONDITION: // CONDITION
       case symbol_kind::S_MODE_COULEUR: // MODE_COULEUR
       case symbol_kind::S_mode: // mode
-      case symbol_kind::S_expression: // expression
       case symbol_kind::S_selection: // selection
         value.template destroy< int > ();
         break;
 
+      case symbol_kind::S_PARAM: // PARAM
       case symbol_kind::S_ID: // ID
       case symbol_kind::S_COULEUR: // COULEUR
       case symbol_kind::S_CHEMIN_JARDIN: // CHEMIN_JARDIN
         value.template destroy< std::string > ();
+        break;
+
+      case symbol_kind::S_parametres: // parametres
+        value.template destroy< std::vector<double> > ();
         break;
 
       default:
@@ -918,6 +946,7 @@ switch (yykind)
                    || (token::FOIS <= tok && tok <= token::COMMENT)
                    || (token::TANTQUE <= tok && tok <= token::MODIF_COULEUR)
                    || (token::TORTUES <= tok && tok <= token::JARDIN)
+                   || tok == token::END_OF_FILE
                    || tok == 45
                    || tok == 43
                    || tok == 42
@@ -943,7 +972,8 @@ switch (yykind)
         : super_type(token_type (tok), v, l)
 #endif
       {
-        YY_ASSERT ((token::SENS <= tok && tok <= token::DIRECTION)
+        YY_ASSERT ((token::SENS <= tok && tok <= token::IdTortue)
+                   || tok == token::DIRECTION
                    || tok == token::CONDITION
                    || tok == token::MODE_COULEUR);
       }
@@ -955,7 +985,8 @@ switch (yykind)
         : super_type(token_type (tok), v, l)
 #endif
       {
-        YY_ASSERT (tok == token::ID
+        YY_ASSERT (tok == token::PARAM
+                   || tok == token::ID
                    || tok == token::COULEUR
                    || tok == token::CHEMIN_JARDIN);
       }
@@ -1143,6 +1174,21 @@ switch (yykind)
       make_IdTortue (const int& v, const location_type& l)
       {
         return symbol_type (token::IdTortue, v, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_PARAM (std::string v, location_type l)
+      {
+        return symbol_type (token::PARAM, std::move (v), std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_PARAM (const std::string& v, const location_type& l)
+      {
+        return symbol_type (token::PARAM, v, l);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1493,6 +1539,21 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_END_OF_FILE (location_type l)
+      {
+        return symbol_type (token::END_OF_FILE, std::move (l));
+      }
+#else
+      static
+      symbol_type
+      make_END_OF_FILE (const location_type& l)
+      {
+        return symbol_type (token::END_OF_FILE, l);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_NEG (location_type l)
       {
         return symbol_type (token::NEG, std::move (l));
@@ -1809,8 +1870,8 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 229,     ///< Last index in yytable_.
-      yynnts_ = 12,  ///< Number of nonterminal symbols.
+      yylast_ = 266,     ///< Last index in yytable_.
+      yynnts_ = 13,  ///< Number of nonterminal symbols.
       yyfinal_ = 5 ///< Termination state number.
     };
 
@@ -1823,7 +1884,7 @@ switch (yykind)
 
 
 } // yy
-#line 1827 "parser.hh"
+#line 1888 "parser.hh"
 
 
 

@@ -9,11 +9,6 @@
 %locations
 
 %code requires{
-    #include "contexte.hh"
-    #include "expressionBinaire.hh"
-    #include "expressionUnaire.hh"
-    #include "constante.hh"
-    #include "variable.hh"
     #include "structure.hh"
 
     class Scanner;
@@ -33,8 +28,6 @@
 
     #undef  yylex
     #define yylex scanner.yylex
-
-    std::map<std::string, InstPtr> fonctions;
 }
 
 %token                  AVANCE
@@ -43,8 +36,8 @@
 %token                  TOURNE
 %token <int>            SENS
 %token <int>            IdTortue
+%token <std::string>    PARAM
 %token <int>            DIRECTION
-
 %token                  NL
 %token                  END
 %token                  SI
@@ -67,10 +60,12 @@
 %token                  TORTUES
 %token                  JARDIN
 %token <std::string>    CHEMIN_JARDIN
+%token                  END_OF_FILE
 
+%type <std::vector<double>> parametres
 %type                   comment
 %type                   fois
-%type <int>             expression
+%type <ExpressionPtr>   expression
 %type <VerifPtr>        verification
 %type <int>             selection
 %type <int>             mode
@@ -124,23 +119,33 @@ instruction :
     | instruction instruction {
         $$ = std::make_shared<Bloc>($1, $2);
     }
-    | ID {
-        $$ = fonctions[$1];
+    | ID parametres {
+        $$ = std::make_shared<Fonction> ($1, $2);
     }
 
+parametres :
+    parametres expression  {
+        $1.push_back($2->calculer(driver.getContexte()));
+        $$ = $1;
+    }
+    | {
+        std::vector<double> v;
+        $$ = v;
+    }
 
 action :
     AVANCE expression selection {
-        $$ = std::make_shared<Action>("avance", $3, $2);
+        $$ = std::make_shared<Action>("avance", $2, $3);
     }
     | RECULE expression selection {
-        $$ = std::make_shared<Action>("avance", $3, -$2);
+        ExpressionPtr inverse = std::make_shared<ExpressionBinaire>(std::make_shared<Constante>(0), $2, OperateurBinaire::moins);
+        $$ = std::make_shared<Action>("avance", inverse, $3);
     }
     | SAUTE expression selection {        
-        $$ = std::make_shared<Action>("saute", $3, 0);
+        $$ = std::make_shared<Action>("saute", 0, $3);
     }
     | TOURNE SENS selection {
-        $$ = std::make_shared<Action>("tourne", $3, $2);
+        $$ = std::make_shared<Action>("tourne", $2, $3);
     }
     | MODIF_COULEUR mode COULEUR selection {
         $$ = std::make_shared<Action>("couleur", $4, $2, $3);
@@ -167,10 +172,10 @@ mode:
 
 expression:
     operation fois {
-        $$ = (int)$1->calculer(driver.getContexte());
+        $$ = $1;
     }
     | {
-        $$ = 1;
+        $$ = std::make_shared<Constante>(1);
     }
 
 comment:
@@ -192,6 +197,9 @@ selection:
 operation:
     NUMBER{
         $$ = std::make_shared<Constante>($1);
+    }
+    | PARAM {
+        $$ = std::make_shared<Variable>($1);
     }
     | '(' operation ')' {
         $$ = $2;

@@ -151,11 +151,16 @@ using token = yy::Parser::token;
     return token::IdTortue;
 }
 
+$[0-9]+   {
+    std::string temp = YYText();
+    yylval->build<std::string>(temp.substr(1));
+    return token::PARAM;
+}
+
 "\n"          {
     loc->lines();
     return token::NL;
 }
-
 
 "+" return '+';
 "*" return '*';
@@ -171,5 +176,7 @@ using token = yy::Parser::token;
     yylval->build<std::string>(YYText());
     return token::ID;
 }
+
+<<EOF>> return token::END_OF_FILE;
 
 %%
